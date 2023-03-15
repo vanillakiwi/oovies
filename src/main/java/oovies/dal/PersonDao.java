@@ -130,6 +130,56 @@ public class PersonDao {
 
 
     /**
+     * Get the Person record by fetching it from your MySQL instance.
+     * This runs a SELECT statement and returns a single Person instance.
+     */
+    public Person getPersonByUserId(int userId) throws SQLException {
+        String selectPerson = "SELECT UserId, UserName, Password, Email, Role FROM Person WHERE UserId=?;";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(selectPerson);
+            selectStmt.setInt(1, userId);
+            results = selectStmt.executeQuery();
+            if (results.next()) {
+                int userId1 = results.getInt("UserId");
+                String resultPersonName = results.getString("UserName");
+                String password = results.getString("Password");
+                String email = results.getString("Email");
+                String role = results.getString("Role");
+                Person person = new Person(userId, resultPersonName, password, email, Person.Role.valueOf(role));
+                return person;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            if (selectStmt != null) {
+                selectStmt.close();
+            }
+            if (results != null) {
+                results.close();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get the UserId record by fetching it from your MySQL instance.
+     * This runs a SELECT statement and returns a single Person instance.
+     */
+    public int getUserIdByUserName(String userName) throws SQLException {
+        return getPersonByUserName(userName).getUserId();
+
+    }
+
+
+    /**
      * Update the Password of the Person instance.
      * This runs a UPDATE statement.
      */

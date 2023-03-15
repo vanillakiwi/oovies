@@ -13,11 +13,13 @@ import oovies.model.*;
  *    public Person create(Person person)
  *    public Person delete(Person person)
  *    public Person getPersonByUserName(String userName)
+ *    public Person getPersonByUserId(int userId)
  *    public Person updatePassword(Person person, String password)
  *    public Person updateEmail(Person person, String email)
  * Director:
  *     public Director create(Director director)
  *     public Director delete(Director director)
+ *     public Director getDirectorByDirectorId(int directorId)
  *     public List<Director> getDirectorByDirectorName(String name)
  *
  *
@@ -48,22 +50,30 @@ public class Inserter {
 
 		// READ.
 		Person person2 = personDao.getPersonByUserName("user");
-		System.out.format("Reading person: id:%d name:%s password:%s email:%s role:%s \n",
+		System.out.format("Reading person by userName: id:%d name:%s password:%s email:%s role:%s \n",
 				person2.getUserId(), person2.getUserName(), person2.getPassword(), person2.getEmail(), person2.getRole().name());
+		Person person3 = personDao.getPersonByUserId(person2.getUserId());
+		System.out.format("Reading person by userId: id:%d name:%s password:%s email:%s role:%s \n",
+				person3.getUserId(), person3.getUserName(), person3.getPassword(), person3.getEmail(), person3.getRole().name());
 		List<Director> dList = directorDao.getDirectorByDirectorName("director");
+		int directorId = -1;
 		for(Director d : dList){
-			System.out.format("Looping directors: id:%d name:%s gender:%s \n",
+			directorId = d.getDirectorId();
+			System.out.format("Looping directors by directorName: id:%d name:%s gender:%s \n",
 					d.getDirectorId(), d.getName(), d.getGender().name());
 
 		}
+		Director director3 = directorDao.getDirectorByDirectorId(directorId);
+		System.out.format("Reading director by directorId: id:%d name:%s gender:%s \n",
+				director3.getDirectorId(), director3.getName(), director3.getGender().name());
 
 		// UPDATE.
 		System.out.format("Reading person before updating password: id:%d name:%s password:%s email:%s role:%s \n",
 				person2.getUserId(), person2.getUserName(), person2.getPassword(), person2.getEmail(), person2.getRole().name());
-		Person person3 = personDao.updatePassword(person2, "newPassword");
+		Person person31 = personDao.updatePassword(person2, "newPassword");
 		System.out.format("Reading person after updating password: id:%d name:%s password:%s email:%s role:%s \n",
-				person3.getUserId(), person3.getUserName(), person3.getPassword(), person3.getEmail(), person3.getRole().name());
-		Person person4 = personDao.updateEmail(person3, "newEmail");
+				person31.getUserId(), person31.getUserName(), person31.getPassword(), person31.getEmail(), person31.getRole().name());
+		Person person4 = personDao.updateEmail(person31, "newEmail");
 		System.out.format("Reading person after updating email: id:%d name:%s password:%s email:%s role:%s \n",
 				person4.getUserId(), person4.getUserName(), person4.getPassword(), person4.getEmail(), person4.getRole().name());
 

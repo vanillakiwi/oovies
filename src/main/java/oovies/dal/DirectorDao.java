@@ -89,6 +89,46 @@ public class DirectorDao {
     }
 
     /**
+     * Get the Director record by fetching them from your MySQL instance.
+     * This runs a SELECT statement and returns a single Director instance.
+     */
+    public Director getDirectorByDirectorId(int directorId) throws SQLException {
+        String selectDirector = "SELECT DirectorId, Name, Gender FROM Director WHERE DirectorId=?;";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(selectDirector);
+            selectStmt.setInt(1, directorId);
+
+            results = selectStmt.executeQuery();
+
+            if (results.next()) {
+                int directId = results.getInt("DirectorId");
+                String resultDirectorName = results.getString("Name");
+                String gender = results.getString("Gender");
+                Director director = new Director(directId, resultDirectorName, oovies.model.Director.Gender.valueOf(gender));
+                return director;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            if (selectStmt != null) {
+                selectStmt.close();
+            }
+            if (results != null) {
+                results.close();
+            }
+        }
+        return null;
+    }
+
+    /**
      * Get the Director records by fetching them from your MySQL instance.
      * This runs a SELECT statement and returns a single Director instance.
      */
@@ -128,6 +168,8 @@ public class DirectorDao {
         }
         return directors;
     }
+
+
 
 
 
