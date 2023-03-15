@@ -46,7 +46,7 @@ public class ReviewsDao {
 			insertStmt = connection.prepareStatement(insertReview,Statement.RETURN_GENERATED_KEYS);
 			insertStmt.setTimestamp(1, new Timestamp(review.getCreated().getTime()));
 			insertStmt.setString(2, review.getContent());
-			insertStmt.setInt(3, review.getPerson().getUserId());
+			insertStmt.setInt(3, review.getUser().getUserId());
 			insertStmt.setInt(4, review.getMovie().getMovieId());
 			insertStmt.executeUpdate();
 			resultKey = insertStmt.getGeneratedKeys();
@@ -147,7 +147,7 @@ public class ReviewsDao {
 				String content = results.getString("Content");
 				int movieId = results.getInt("MovieId");
 
-				Person user = personDao.getUserByUserId(userId);
+				Person user = personDao.getPersonByUserId(userId);
 				Movie movie = movieDao.getMovieById(movieId);
 				Reviews review = new Reviews(resultReviewId, created, content, user, movie);
 				reviews.add(review);
@@ -185,17 +185,16 @@ public class ReviewsDao {
 			selectStmt = connection.prepareStatement(selectReview);
 			selectStmt.setInt(1, movieId);
 			results = selectStmt.executeQuery();
-			UsersDao usersDao = UsersDao.getInstance();
+			PersonDao personDao = PersonDao.getInstance();
 			MovieDao moviesDao = MovieDao.getInstance();
 			
 			while(results.next()) {
 				int resultReviewId = results.getInt("ReviewId");
 				Date created =  new Date(results.getTimestamp("Created").getTime());
 				String content = results.getString("Content");
-				double rating = results.getDouble("Rating");
-				String userName = results.getString("UserName");
+				int userId = results.getInt("UserId");
 
-				Users user = usersDao.getUserByUseId(userId);
+				Person user = personDao.getPersonByUseId(userId);
 				Movie movie = moviesDao.getMovieById(movieId);
 				Reviews review = new Reviews(resultReviewId, created, content, user, movie);
 				reviews.add(review);

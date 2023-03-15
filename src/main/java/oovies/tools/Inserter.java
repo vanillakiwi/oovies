@@ -27,16 +27,16 @@ public class Inserter {
 		review1 = reviewsDao.create(review1);
 		Reviews review2 = new Reviews(date, "Superb!", user1, movie2);
 		review2 = reviewsDao.create(review2);
-		Reviews review3 = new Reviews(date, "Not good", user4, movie3);
+		Reviews review3 = new Reviews(date, "Not good", user2, movie3);
 		review3 = reviewsDao.create(review3);
-		Reviews review4 = new Reviews(date, "Not good at all", user4, movie1);
+		Reviews review4 = new Reviews(date, "Not good at all", user2, movie1);
 		review4 = reviewsDao.create(review4);
 		
 		// Get review by reviewId
 		Reviews reviewOne = reviewsDao.getReviewById(1);
 		System.out.format("Reading reviewOne: reviewId:%d content:%s userId:%d movieId:%d\n", 
 				reviewOne.getReviewId(), reviewOne.getContent(), 
-				reviewOne.getPerson().getUserId(),
+				reviewOne.getUser().getUserId(),
 				reviewOne.getMovie().gerMovieId());
 		
 		// Get review list by given UserId
@@ -50,7 +50,7 @@ public class Inserter {
 			for (Reviews r : rMovieList) {
 				System.out.format("Looping reviews for movie1: reviewId:%db"
 						+ "content:%s userId:%d\n", r.getReviewId(), r.getContent(),
-						r.getPerson().getUserId());
+						r.getUser().getUserId());
 			}
 				
 		System.out.println("Deleting review2 ...");
@@ -62,38 +62,38 @@ public class Inserter {
 		// Rating
 		// Create ratings
 		Rating rating1 = new Rating(10.0, user1, movie1);
-		rating1 = ratingsDao.create(rating1);
+		rating1 = ratingDao.create(rating1);
 		Rating rating2 = new Rating(9.5, user1, movie2);
-		rating2 = ratingsDao.create(rating2);
-		Rating rating3 = new Rating(5.0, user4, movie3);
-		rating3 = ratingsDao.create(rating3);
-		Rating rating4 = new Rating(1.0, user4, movie1);
-		rating4 = ratingsDao.create(rating4);
+		rating2 = ratingDao.create(rating2);
+		Rating rating3 = new Rating(5.0, user2, movie3);
+		rating3 = ratingDao.create(rating3);
+		Rating rating4 = new Rating(1.0, user2, movie1);
+		rating4 = ratingDao.create(rating4);
 				
 		// Get rating by ratingId
-		Rating ratingOne = ratingsDao.getRatingById(1);
+		Rating ratingOne = ratingDao.getRatingById(1);
 		System.out.format("Reading ratingOne: ratingId:%d score:%d userId:%d movieId:%d\n", 
 		ratingOne.getRatingId(), ratingOne.getScore(), 
-		ratingOne.getPerson().getUserId(),
+		ratingOne.getUser().getUserId(),
 		ratingOne.getMovie().gerMovieId());
 				
 		// Get rating list by given UserId
-		List<Rating> rUserList = ratingsDao.getRatingByUserId(1);
+		List<Rating> rUserList = ratingDao.getRatingByUserId(1);
 		for (Rating r : rUserList) {
 		System.out.format("Looping ratings created by UserId 1: ratingId:%d "
 				+ "score:%d movieId:%d\n", 
 				r.getRatingId(), r.getScore(), r.getMovie().getMovieId());
 		}
 						
-		List<Rating> rMovieList = ratingsDao.getRatingByMovieId(1);
+		List<Rating> rMovieList = ratingDao.getRatingByMovieId(1);
 		for (Rating r : rMovieList) {
 			System.out.format("Looping ratings for movie1: ratingId:%db"
 				+ "score:%d userId:%d\n", r.getRatingId(), r.getScore(),
-				r.getPerson().getUserId());
+				r.getUser().getUserId());
 		}
 						
 		System.out.println("Deleting rating2 ...");
-		Rating rating2Deleted = ratingsDao.delete(rating2);
+		Rating rating2Deleted = ratingDao.delete(rating2);
 		if (rating2Deleted == null) {
 			System.out.println("rating2 has been successfully deleted.");
 		}

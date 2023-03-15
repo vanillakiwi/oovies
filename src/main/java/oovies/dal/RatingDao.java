@@ -45,7 +45,7 @@ public class RatingDao {
 			connection = connectionManager.getConnection();
 			insertStmt = connection.prepareStatement(insertRating,Statement.RETURN_GENERATED_KEYS);
 			insertStmt.setDouble(1, rating.getScore());
-			insertStmt.setInt(2, rating.getPerson().getUserId());
+			insertStmt.setInt(2, rating.getUser().getUserId());
 			insertStmt.setInt(3, rating.getMovie().getMovieId());
 			insertStmt.executeUpdate();
 			resultKey = insertStmt.getGeneratedKeys();
@@ -144,7 +144,7 @@ public class RatingDao {
 				double score = results.getDouble("Score");
 				int movieId = results.getInt("MovieId");
 
-				Person user = personDao.getUserByUserId(userId);
+				Person user = personDao.getPersonByUserId(userId);
 				Movie movie = movieDao.getMovieById(movieId);
 				Rating rating = new Rating(resultRatingId, score, user, movie);
 				ratings.add(rating);
@@ -182,7 +182,7 @@ public class RatingDao {
 			selectStmt = connection.prepareStatement(selectRating);
 			selectStmt.setInt(1, movieId);
 			results = selectStmt.executeQuery();
-			UsersDao usersDao = UsersDao.getInstance();
+			PersonDao personDao = PersonDao.getInstance();
 			MovieDao moviesDao = MovieDao.getInstance();
 			
 			while(results.next()) {
@@ -190,7 +190,7 @@ public class RatingDao {
 				double score = results.getDouble("Score");
 				String userName = results.getString("UserId");
 
-				Users user = usersDao.getUserByUseId(userId);
+				Person user = personDao.getPersonByUseId(userId);
 				Movie movie = moviesDao.getMovieById(movieId);
 				Rating rating = new Rating(resultRatingId, score, user, movie);
 				ratings.add(rating);
