@@ -123,7 +123,7 @@ public class ReviewsDao {
 	}
 	
 	/**
-	 * Get the Reviews by the given userId.
+	 * Get the Reviews list by the given userId.
 	 */
 	public List<Reviews> getReviewsByUserId(int userId) throws SQLException {
 		List<Reviews> reviews = new ArrayList<Reviews>();
@@ -170,11 +170,11 @@ public class ReviewsDao {
 	}
 	
 	/**
-	 * Get the Reviews by the given movie id.
+	 * Get the Reviews list by the given movie id.
 	 */
 	public List<Reviews> getReviewsByMovieId(int movieId) throws SQLException {
 		List<Reviews> reviews = new ArrayList<Reviews>();
-		String selectReview = "SELECT ReviewId,Created,Content,UserName,MovieId "
+		String selectReview = "SELECT ReviewId,Created,Content,UserName "
 				+ "FROM Reviews "
 				+ "WHERE MovieId=?;";
 		Connection connection = null;
@@ -194,7 +194,7 @@ public class ReviewsDao {
 				String content = results.getString("Content");
 				int userId = results.getInt("UserId");
 
-				Person user = personDao.getPersonByUseId(userId);
+				Person user = personDao.getPersonByUserId(userId);
 				Movie movie = moviesDao.getMovieById(movieId);
 				Reviews review = new Reviews(resultReviewId, created, content, user, movie);
 				reviews.add(review);

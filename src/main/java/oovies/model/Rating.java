@@ -1,6 +1,5 @@
 package oovies.model;
 
-import java.util.Date;
 
 /**
  * Rating is a simple, plain old java objects (POJO).

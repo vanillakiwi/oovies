@@ -171,7 +171,7 @@ public class RatingDao {
 	 */
 	public List<Rating> getRatingByMovieId(int movieId) throws SQLException {
 		List<Rating> ratings = new ArrayList<Rating>();
-		String selectRating = "SELECT RatingId,Score,UserName,MovieId "
+		String selectRating = "SELECT RatingId,Score,UserId,MovieId "
 				+ "FROM Rating "
 				+ "WHERE MovieId=?;";
 		Connection connection = null;
@@ -188,9 +188,9 @@ public class RatingDao {
 			while(results.next()) {
 				int resultRatingId = results.getInt("RatingId");
 				double score = results.getDouble("Score");
-				String userName = results.getString("UserId");
+				int userId = results.getInt("UserId");
 
-				Person user = personDao.getPersonByUseId(userId);
+				Person user = personDao.getPersonByUserId(userId);
 				Movie movie = moviesDao.getMovieById(movieId);
 				Rating rating = new Rating(resultRatingId, score, user, movie);
 				ratings.add(rating);
