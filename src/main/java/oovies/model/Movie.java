@@ -33,7 +33,6 @@ public class Movie {
 		this.director = director;
 		this.studio = studio;
 		this.genre = genre;
-		
 	}
 	
 	public Movie(int movieId, String title, Date releaseDate, double rating, int duration,String summary, Director director, Studio studio, Genre genre) {
@@ -46,7 +45,6 @@ public class Movie {
 		this.director = director;
 		this.studio = studio;
 		this.genre = genre;
-		
 	}
 	
 	
@@ -146,3 +144,4 @@ public class Movie {
 
 
 }
+
