@@ -93,7 +93,7 @@ public class Inserter {
 		updateAll();
 
 		// Test Delete Methods for all classes.
-		deleteAll();
+		// deleteAll();
 
 	}
 
@@ -428,55 +428,36 @@ public class Inserter {
 		System.out.format("After update movie summary, summary:%s\n", movie.getSummary());
 	}
 
-	public static void deleteAll() throws SQLException {
-		System.out.println("Deleting all users ...");
-		for (Person person : persons) {
-			personDao.delete(person);
-		}
-
-		System.out.println("Deleting all directors ...");
-		for (Director director : directors) {
-			directorDao.delete(director);
-		}
-
-		System.out.println("Deleting all actors ...");
-		for (Actor actor : actors) {
-			actorDao.delete(actor);
-		}
-
-		System.out.println("Deleting all studios ...");
-		for (Studio studio : studios) {
-			studioDao.delete(studio);
-		}
-
-		System.out.println("Deleting all movies ...");
-		for (Movie movie : movies) {
-			movieDao.delete(movie);
-		}
-
-		System.out.println("Deleting all casts ...");
-		for (Casts cast : casts) {
-			castDao.delete(cast);
-		}
-		
-		System.out.println("Deleting all follows ...");
-		for (Follow follow : follows) {
-			followDao.delete(follow);
-		}
-		
-		System.out.println("Deleting all loves ...");
-		for (Love love: loves) {
-			loveDao.delete(love);
-		}
-		
-		System.out.println("Deleting all reviews ...");
-		for (Reviews review: reviews) {
-			reviewsDao.delete(review);
-		}
-		
-		System.out.println("Deleting all ratings ...");
-		for (Rating rating: ratings) {
-			ratingDao.delete(rating);
-		}
-	}
+	/*
+	 * public static void deleteAll() throws SQLException {
+	 * System.out.println("Deleting all users ..."); for (Person person : persons) {
+	 * personDao.delete(person); }
+	 * 
+	 * System.out.println("Deleting all directors ..."); for (Director director :
+	 * directors) { directorDao.delete(director); }
+	 * 
+	 * System.out.println("Deleting all actors ..."); for (Actor actor : actors) {
+	 * actorDao.delete(actor); }
+	 * 
+	 * System.out.println("Deleting all studios ..."); for (Studio studio : studios)
+	 * { studioDao.delete(studio); }
+	 * 
+	 * System.out.println("Deleting all movies ..."); for (Movie movie : movies) {
+	 * movieDao.delete(movie); }
+	 * 
+	 * System.out.println("Deleting all casts ..."); for (Casts cast : casts) {
+	 * castDao.delete(cast); }
+	 * 
+	 * System.out.println("Deleting all follows ..."); for (Follow follow : follows)
+	 * { followDao.delete(follow); }
+	 * 
+	 * System.out.println("Deleting all loves ..."); for (Love love: loves) {
+	 * loveDao.delete(love); }
+	 * 
+	 * System.out.println("Deleting all reviews ..."); for (Reviews review: reviews)
+	 * { reviewsDao.delete(review); }
+	 * 
+	 * System.out.println("Deleting all ratings ..."); for (Rating rating: ratings)
+	 * { ratingDao.delete(rating); } }
+	 */
 }
