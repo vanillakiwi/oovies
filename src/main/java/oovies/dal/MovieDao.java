@@ -242,7 +242,6 @@ public class MovieDao {
 		public List<Movie> getMovieByStudioId(int studioId) throws SQLException {
 			List<Movie> movies = new ArrayList<>();
 			
-			
 			String selectMovies = "SELECT MovieId,Title,ReleaseDate,Rating,Duration,Summary,DirectorId,StudioId,Genre "
 					+ "FROM Movie WHERE StudioId=?;";
 			
@@ -390,6 +389,51 @@ public class MovieDao {
 					updateStmt.close();
 				}
 			}
+		}
+		
+		/**
+		 * Get movies' list base on given title
+		 */
+		public List<Movie> getMovieByTitle(String title) throws SQLException {
+		    List<Movie> movies = new ArrayList<>();
+
+		    String selectMovies = "SELECT MovieId,Title,ReleaseDate,Rating,Duration,Summary,DirectorId,StudioId,Genre "
+		            + "FROM Movie WHERE Title LIKE ?;";
+
+		    try (Connection connection = connectionManager.getConnection();
+		         PreparedStatement selectStmt = connection.prepareStatement(selectMovies)) {
+
+		        selectStmt.setString(1, "%" + title + "%");
+		        try (ResultSet results = selectStmt.executeQuery()) {
+		            DirectorDao directorDao = DirectorDao.getInstance();
+		            StudioDao studioDao = StudioDao.getInstance();
+
+		            while (results.next()) {
+		                int resultMovieId = results.getInt("MovieId");
+		                String resultTitle = results.getString("Title");
+		                Date releaseDate = results.getDate("ReleaseDate");
+		                Double rating = results.getDouble("Rating");
+		                int duration = results.getInt("Duration");
+		                String summary = results.getString("Summary");
+		                int directorId = results.getInt("DirectorId");
+		                int studioId = results.getInt("StudioID");
+
+		                Director director = directorDao.getDirectorByDirectorId(directorId);
+		                Studio studio = studioDao.getStudioById(studioId);
+		                String genreStr = results.getString("Genre");
+		                Movie.Genre genre = genreStr != null ? Movie.Genre.valueOf(genreStr) : null;
+
+		                Movie movie = new Movie(resultMovieId, resultTitle, releaseDate, rating, duration, summary,
+		                        director, studio, genre);
+
+		                movies.add(movie);
+		            }
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        throw e;
+		    }
+		    return movies;
 		}
 		
 		

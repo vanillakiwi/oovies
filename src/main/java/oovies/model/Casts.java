@@ -21,9 +21,6 @@ public class Casts {
 		this.actor = actor;
 	}
 	
-	
-	
-	
 	/** Getters and setters. */
 
 	public int getCastId() {
