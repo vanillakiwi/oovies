@@ -59,7 +59,7 @@ public class FindMovies extends HttpServlet {
         	return;
         } else {
             try {
-                movies = movieDao.getMovieByTitle(title, genre, year, rating);
+                movies = movieDao.getMovieByAdvancedSearch(title, genre, year, rating);
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new IOException(e);
@@ -103,7 +103,7 @@ public class FindMovies extends HttpServlet {
             rating = Double.parseDouble(ratingStr);
         } else {
             try {
-                movies = movieDao.getMovieByTitle(title, genre, year, rating);
+                movies = movieDao.getMovieByAdvancedSearch(title, genre, year, rating);
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new IOException(e);
