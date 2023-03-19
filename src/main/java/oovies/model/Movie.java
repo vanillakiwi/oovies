@@ -77,11 +77,9 @@ public class Movie {
 		return releaseDate;
 	}
 
-
 	public void setReleaseDate(Date releaseDate) {
 		this.releaseDate = releaseDate;
 	}
-
 
 	public double getRating() {
 		return rating;
