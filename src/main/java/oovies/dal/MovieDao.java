@@ -242,7 +242,6 @@ public class MovieDao {
 		public List<Movie> getMovieByStudioId(int studioId) throws SQLException {
 			List<Movie> movies = new ArrayList<>();
 			
-			
 			String selectMovies = "SELECT MovieId,Title,ReleaseDate,Rating,Duration,Summary,DirectorId,StudioId,Genre "
 					+ "FROM Movie WHERE StudioId=?;";
 			
@@ -392,7 +391,75 @@ public class MovieDao {
 			}
 		}
 		
-		
+		/**
+		 * Advance search to get movies' list base on given filter: title, genre, year and rating
+		 */
+		public List<Movie> getMovieByAdvancedSearch(String title, Movie.Genre genre, int year, double rating) throws SQLException {
+		    List<Movie> movies = new ArrayList<>();
 
+		    StringBuilder sb = new StringBuilder();
+	        sb.append("SELECT MovieId,Title,ReleaseDate,Rating,Duration,Summary,DirectorId,StudioId,Genre "
+	        		  + "FROM Movie WHERE 1=1");
+	        if (title != null && !title.isEmpty()) {
+	            sb.append(" AND Title LIKE ?");
+	        }
+	        if (genre != null) {
+	            sb.append(" AND Genre = ?");
+	        }
+	        if (year > 1923) {
+	            sb.append(" AND YEAR(ReleaseDate) = ?");
+	        }
+	        if (rating > 0.0) {
+	        	sb.append(" AND Rating >= ?");
+	        }
+	        
+		    try (Connection connection = connectionManager.getConnection();
+		         PreparedStatement selectStmt = connection.prepareStatement(sb.toString())) {
+
+
+		    	// Set the parameters for the query
+		        int paramIndex = 1;
+		        if (title != null && !title.isEmpty()) {
+		        	selectStmt.setString(paramIndex++, "%" + title + "%");
+		        }
+		        if (genre != null) {
+		        	selectStmt.setString(paramIndex++, genre.toString());
+		        }
+		        if (year > 1923) {
+		        	selectStmt.setInt(paramIndex++, year);
+		        }
+		        if (rating > 0.0) {
+		        	selectStmt.setDouble(paramIndex++, rating);
+		        }
+		        
+		        try (ResultSet results = selectStmt.executeQuery()) {
+		            DirectorDao directorDao = DirectorDao.getInstance();
+		            StudioDao studioDao = StudioDao.getInstance();
+
+		            while (results.next()) {
+		                int resultMovieId = results.getInt("MovieId");
+		                String resultTitle = results.getString("Title");
+		                Date releaseDate = results.getDate("ReleaseDate");
+		                Double resultRating = results.getDouble("Rating");
+		                int duration = results.getInt("Duration");
+		                String summary = results.getString("Summary");
+		                int directorId = results.getInt("DirectorId");
+		                int studioId = results.getInt("StudioID");
+
+		                Director director = directorDao.getDirectorByDirectorId(directorId);
+		                Studio studio = studioDao.getStudioById(studioId);
+		                Movie.Genre resultGenre = Movie.Genre.valueOf(results.getString("Genre"));
+		                
+		                Movie movie = new Movie(resultMovieId, resultTitle, releaseDate, resultRating, duration, summary,
+		                        director, studio, resultGenre);
+
+		                movies.add(movie);
+		            }
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        throw e;
+		    }
+		    return movies;
+		}
 }
-

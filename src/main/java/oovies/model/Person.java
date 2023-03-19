@@ -32,6 +32,12 @@ public class Person{
         this.email = email;
         this.role = role;
     }
+    
+    
+    public Person(String userName) {
+    	this.userName = userName;
+    }
+    
 
     public int getUserId() {
         return userId;
