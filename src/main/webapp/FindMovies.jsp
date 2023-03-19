@@ -15,19 +15,44 @@
 <body>
 	<div class="container my-5">
 		<form action="findmovies" method="post">
-			<h1 class="mb-4">Search for movies by Title</h1>
-			<div class="form-floating mb-3">
-				<input type="text" class="form-control" id="title" name="title" value="${fn:escapeXml(param.title)}">
-				<label for="title">Title</label>
-			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
-			<br/><br/><br/>
-			<span id="successMessage"><b>${messages.success}</b></span>
+			<h1 class="mb-4">Search movies</h1>
+			
+			<div class="form-group mr-2">
+      			<input type="text" name="title" class="form-control" placeholder="Search by title">
+   			</div>
+    		<div class="form-group mr-2">
+      			<select name="genre" class="form-control">
+        			<option value="">All genres</option>
+        			<option value="DRAMA">Drama</option>
+        			<option value="COMEDY">Comedy</option>
+        			<option value="ACTION">Action</option>
+        			<option value="FANTASY">Fantasy</option>
+        			<option value="HORROR">Horror</option>
+        			<option value="ROMANCE">Romance</option>
+        			<option value="WESTERN">Western</option>
+        			<option value="THRILLER">Thriller</option>
+        			<option value="ANIMATION">Animation</option>
+      			</select>
+    		</div>
+    		<div class="form-group mr-2">
+      			<input type="text" name="year" class="form-control" placeholder="Year">
+    		</div>
+   			<div class="form-group mr-2">
+   				<select name="rating" class="form-control">
+		        	<option value="">All ratings</option>
+		        	<option value="5.0">5.0</option>
+		        	<option value="4.0">4.0 - 4.9</option>
+		        	<option value="3.0">3.0 - 3.9</option>
+		        	<option value="2.0">2.0 - 2.9</option>
+		        	<option value="1.0">1.0 - 1.9</option>
+		      	</select>
+		    </div>
+			<button type="submit" class="btn btn-primary mt-2">Submit</button>
 		</form>
 		<br/>
-		<div id="userCreate"><a href="usercreate" class="btn btn-outline-secondary">Create User</a></div>
-		<br/>
-		<h1 class="mb-4">Matching Movies</h1>
+			<span id="successMessage"><b>${messages.success}</b></span>
+		<br/><br/>
+		<h2 class="mb-2">Matching Movies</h2>
 		<table class="table">
 			<thead>
 				<tr>
