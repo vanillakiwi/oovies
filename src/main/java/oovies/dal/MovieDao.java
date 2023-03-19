@@ -398,8 +398,8 @@ public class MovieDao {
 		    List<Movie> movies = new ArrayList<>();
 
 		    StringBuilder sb = new StringBuilder();
-	        sb.append("SELECT MovieId,Title,ReleaseDate,Rating,Duration,Summary,DirectorId,StudioId,Genre \"\n"
-	        		+ "FROM Movie WHERE 1=1");
+	        sb.append("SELECT MovieId,Title,ReleaseDate,Rating,Duration,Summary,DirectorId,StudioId,Genre "
+	        		  + "FROM Movie WHERE 1=1");
 	        if (title != null && !title.isEmpty()) {
 	            sb.append(" AND Title LIKE ?");
 	        }
@@ -424,7 +424,7 @@ public class MovieDao {
 		        if (genre != null) {
 		        	selectStmt.setString(paramIndex++, genre.toString());
 		        }
-		        if (year > 0) {
+		        if (year > 1923) {
 		        	selectStmt.setInt(paramIndex++, year);
 		        }
 		        if (rating > 0.0) {

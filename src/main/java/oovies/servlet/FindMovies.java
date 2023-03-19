@@ -55,11 +55,12 @@ public class FindMovies extends HttpServlet {
         }
        
         if (title == null || title.isEmpty()) {
-        	messages.put("success", "Please enter a valid title.");
-        	return;
+        	messages.put("success", "Title cannot be empty.");
+        	messages.put("disableSubmit", "true");
         } else {
             try {
                 movies = movieDao.getMovieByAdvancedSearch(title, genre, year, rating);
+                messages.put("success", "Displaying results for: " + title);
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new IOException(e);
@@ -83,11 +84,6 @@ public class FindMovies extends HttpServlet {
         String yearStr = req.getParameter("year");
         String ratingStr = req.getParameter("rating");
         
-        if (title == null || title.isEmpty()) {
-        	messages.put("success", "Please enter a valid title.");
-        	messages.put("disableSubmit", "true");
-        }
-        
         Movie.Genre genre = null;
         if (genreStr != null && !genreStr.isEmpty()) {
             genre = Movie.Genre.valueOf(genreStr);
@@ -101,9 +97,15 @@ public class FindMovies extends HttpServlet {
         double rating = 0.0;
         if (ratingStr != null && !ratingStr.isEmpty()) {
             rating = Double.parseDouble(ratingStr);
+        } 
+        
+        if (title == null || title.isEmpty()) {
+        	messages.put("success", "Title cannot be empty");
+        	messages.put("disableSubmit", "true");
         } else {
             try {
                 movies = movieDao.getMovieByAdvancedSearch(title, genre, year, rating);
+                messages.put("success", "Displaying results for Title: " + title + " Genre: " + genre + " Year: " + year + " Rating: " + rating);
             } catch (SQLException e) {
                 e.printStackTrace();
                 throw new IOException(e);

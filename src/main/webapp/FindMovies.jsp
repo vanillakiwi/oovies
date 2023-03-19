@@ -19,7 +19,7 @@
 			
 			<div class="form-group mr-2">
       			<input type="text" name="title" class="form-control" placeholder="Search by title">
-   			 </div>
+   			</div>
     		<div class="form-group mr-2">
       			<select name="genre" class="form-control">
         			<option value="">All genres</option>
@@ -40,18 +40,19 @@
    			<div class="form-group mr-2">
    				<select name="rating" class="form-control">
 		        	<option value="">All ratings</option>
-		        	<option value="5.0">5.0+</option>
-		        	<option value="4.0">4.0+</option>
-		        	<option value="3.0">3.0+</option>
-		        	<option value="2.0">2.0+</option>
-		        	<option value="1.0">1.0+</option>
+		        	<option value="5.0">5.0</option>
+		        	<option value="4.0">4.0 - 4.9</option>
+		        	<option value="3.0">3.0 - 3.9</option>
+		        	<option value="2.0">2.0 - 2.9</option>
+		        	<option value="1.0">1.0 - 1.9</option>
 		      	</select>
 		    </div>
-			<button type="submit" class="btn btn-primary">Submit</button>
-			<br/><br/><br/>
-			<span id="successMessage"><b>${messages.success}</b></span>
+			<button type="submit" class="btn btn-primary mt-2">Submit</button>
 		</form>
-		<h1 class="mb-4">Matching Movies</h1>
+		<br/>
+			<span id="successMessage"><b>${messages.success}</b></span>
+		<br/><br/>
+		<h2 class="mb-2">Matching Movies</h2>
 		<table class="table">
 			<thead>
 				<tr>
