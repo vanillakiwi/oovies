@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
 </head>
 <body>
+	<jsp:include page="NavBar.jsp" />
     <div class="container">
         <h1 class="mt-5 mb-3">Update User</h1>
         <form action="userupdate" method="post">

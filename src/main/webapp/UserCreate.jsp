@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
 </head>
 <body>
+	<jsp:include page="NavBar.jsp" />
     <div class="container mt-5">
         <h1 class="text-center mb-5">Sign Up</h1>
         <p class="text-center">
