@@ -74,11 +74,20 @@ public class UserUpdate extends HttpServlet {
         		} else {
         			String newPassword = req.getParameter("password");
         			if (newPassword == null || newPassword.trim().isEmpty()) {
-        	            messages.put("success", "Please enter a valid LastName.");
+        	            messages.put("success", "Please enter a valid password.");
         	        } else {
         	        	person = personDao.updatePassword(person, newPassword);
-        	        	messages.put("success", "Successfully updated " + userName);
+        	        	messages.put("success", "Successfully updated " + userName + "'s password");
         	        }
+        			
+        			String newEmail = req.getParameter("email");
+        			if (newEmail == null || newEmail.trim().isEmpty()) {
+        	            messages.put("success", "Please enter a valid email.");
+        	        } else {
+        	        	person = personDao.updateEmail(person, newEmail);
+        	        	messages.put("success", "Successfully updated " + userName + "'s email to "+ newEmail);
+        	        }
+        			
         		}
         		req.setAttribute("person", person);
         	} catch (SQLException e) {
