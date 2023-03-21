@@ -46,12 +46,16 @@ public class MovieDelete extends HttpServlet {
         } else {
         	Movie movie = new Movie(Integer.valueOf(movieId));
         	try {
+				Movie currentMovie = movieDao.getMovieById(Integer.valueOf(movieId));
         		movie = movieDao.delete(movie);
-        		if (movie == null) {
-        			messages.put("title", "Successfully deleted " + movie.getTitle());
+				if(currentMovie == null && movie == null){
+					messages.put("title", "Movie does not exist.");
+				}
+        		else if (movie == null) {
+        			messages.put("title", "Successfully deleted " + currentMovie.getTitle());
         			messages.put("disableSubmit", "true");
         		} else {
-        			messages.put("title", "Failed to delete " + movie.getTitle());
+        			messages.put("title", "Failed to delete " + currentMovie.getTitle());
 		        	messages.put("disableSubmit", "false");
         		}
         	} catch (SQLException e) {
