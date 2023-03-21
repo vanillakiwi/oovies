@@ -45,6 +45,24 @@
 			</tbody>
 		</table>
 		
+		<h4 class="mb-2">Casts for <c:out value="${movie.getTitle()}" /></h4>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">ActorId</th>
+					<th scope="col">Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${actors}" var="actor" >
+					<tr>
+						<td><c:out value="${actor.getActorId()}" /></td>
+						<td><c:out value="${actor.getName()}" /></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		
 		<h4 class="mb-2">Reviews for <c:out value="${movie.getTitle()}" /></h4>
 		<table class="table">
 			<thead>
@@ -69,4 +87,3 @@
 	</div>
 </body>
 </html>
-

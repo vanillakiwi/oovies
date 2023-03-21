@@ -190,6 +190,7 @@ public class Inserter {
 					other.getActorId(), other.getName(), other.getGender().name());
 		}
 		
+		// Get actors' list by given movieId
 		for (Actor other : actorDao.getActorsByMovieId(movies.get(0).getMovieId())) {
 			System.out.format("Reading actor by movieId %s: id:%d name:%s gender:%s \n", movies.get(0).getMovieId(),
 					other.getActorId(), other.getName(), other.getGender().name());

@@ -22,11 +22,13 @@ public class MovieDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MovieDao movieDao;
 	private ReviewsDao reviewsDao;
+	private ActorDao actorDao;
 
 	@Override
 	public void init() throws ServletException {
 		movieDao = MovieDao.getInstance();
 		reviewsDao = ReviewsDao.getInstance();
+		actorDao = ActorDao.getInstance();
 	}
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -40,10 +42,12 @@ public class MovieDetails extends HttpServlet {
         Movie movie;
         
         List<Reviews> reviews = new ArrayList<Reviews>();
+        List<Actor> actors = new ArrayList<Actor>();
         
         try {
 			movie = movieDao.getMovieById(Integer.parseInt(movieId));
 			reviews = reviewsDao.getReviewsByMovieId(Integer.parseInt(movieId));
+			actors = actorDao.getActorsByMovieId(Integer.parseInt(movieId));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new IOException(e);
@@ -51,6 +55,7 @@ public class MovieDetails extends HttpServlet {
 		
 		req.setAttribute("movie", movie);
 		req.setAttribute("reviews", reviews);
+		req.setAttribute("actors", actors);
 		req.getRequestDispatcher("/MovieDetails.jsp").forward(req, resp);
 
     }
@@ -66,11 +71,14 @@ public class MovieDetails extends HttpServlet {
         Movie movie;
         
         List<Reviews> reviews = new ArrayList<Reviews>();
+        List<Actor> actors = new ArrayList<Actor>();
         
         try {
 			movie = movieDao.getMovieById(Integer.parseInt(movieId));
 			reviews = reviewsDao.getReviewsByMovieId(Integer.parseInt(movieId));
+			actors = actorDao.getActorsByMovieId(Integer.parseInt(movieId));
 			messages.put("success", "Displaying details for movie: " + movie.getTitle());
+			messages.put("success", "Displaying casts for: " + movie.getTitle());
 			messages.put("success", "Displaying reviews for: " + movie.getTitle());
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -79,6 +87,7 @@ public class MovieDetails extends HttpServlet {
 		
 		req.setAttribute("movie", movie);
 		req.setAttribute("reviews", reviews);
+		req.setAttribute("actors", actors);
 		req.getRequestDispatcher("/MovieDetails.jsp").forward(req, resp);
 
     }
