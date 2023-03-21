@@ -21,11 +21,6 @@
                 <tr>
                     <th>Username</th>
                     <th>Email</th>
-<<<<<<< Updated upstream
-                    <th>First Name</th>
-                    <th>Last Name</th>
-=======
->>>>>>> Stashed changes
                     <th>Role</th>
                     <th>Action</th>
                 </tr>
@@ -35,11 +30,6 @@
                     <tr>
                         <td>${user.getUserName()}</td>
                         <td>${user.getEmail()}</td>
-<<<<<<< Updated upstream
-                        <td>${user.getFirstName()}</td>
-                        <td>${user.getLastName()}</td>
-=======
->>>>>>> Stashed changes
                         <td>${user.getRole().name()}</td>
                         <td>
                             <form action="userdelete" method="post">

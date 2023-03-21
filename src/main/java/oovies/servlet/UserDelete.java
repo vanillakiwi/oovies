@@ -70,8 +70,4 @@ public class UserDelete extends HttpServlet {
         
         req.getRequestDispatcher("/UserDelete.jsp").forward(req, resp);
     }
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 }

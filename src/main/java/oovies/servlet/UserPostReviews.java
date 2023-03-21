@@ -18,6 +18,7 @@ import oovies.model.Reviews;
 @WebServlet("/userpostreviews")
 public class UserPostReviews extends HttpServlet {
 
+  private static final long serialVersionUID = 1L;
   protected ReviewsDao reviewsDao;
 
   public void init() throws ServletException {
@@ -50,8 +51,4 @@ public class UserPostReviews extends HttpServlet {
       req.getRequestDispatcher("/UserPostReviews.jsp").forward(req, resp);
     }
   }
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes
