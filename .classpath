@@ -13,8 +13,5 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="/Users/rainiezhao/Desktop/CS5200/taglibs-standard-impl-1.2.5.jar"/>
-	<classpathentry kind="lib" path="/Users/rainiezhao/Desktop/CS5200/taglibs-standard-spec-1.2.5.jar"/>
-	<classpathentry kind="lib" path="/Users/rainiezhao/Desktop/CS5200/mysql-connector-j-8.0.32/mysql-connector-j-8.0.32.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
