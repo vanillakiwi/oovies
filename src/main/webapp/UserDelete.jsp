@@ -22,6 +22,26 @@
             </div>
             <button type="submit" class="btn btn-primary" <c:if test="${messages.disableSubmit}">disabled</c:if>>Delete</button>
         </form>
+        
+        <h1>Users</h1>
+	
+        <form action="findusers" method="post">
+	        <table border="1">
+	            <tr>
+	                <th>UserName</th>
+	                <th>Role</th>      
+	                <th>Delete</th>	                
+	            </tr>
+	            <c:forEach items="${persons}" var="person" >
+	                <tr>
+	                    <td><c:out value="${person.getUserName()}" /></td>
+	                    <td><c:out value="${person.getRole()}" /></td>               
+	                    <td><a href="userdelete?username=<c:out value="${person.getUserName()}"/>">Delete</a></td>
+	                 
+	                </tr>
+	            </c:forEach>
+	       </table>
+       </form>
     </div>
 </body>
 </html>

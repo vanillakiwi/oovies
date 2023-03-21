@@ -3,6 +3,7 @@ package oovies.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -72,4 +73,6 @@ public class UserDelete extends HttpServlet {
         
         req.getRequestDispatcher("/UserDelete.jsp").forward(req, resp);
     }
+	
+
 }
