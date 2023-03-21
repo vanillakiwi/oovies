@@ -12,16 +12,40 @@
     <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
 </head>
 <body>
-	<jsp:include page="NavBar.jsp" />
+    <jsp:include page="NavBar.jsp" />
     <div class="container mt-4">
-        <h1>${messages.title}</h1>
-        <form action="userdelete" method="post">
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" value="${fn:escapeXml(param.username)}">
-            </div>
-            <button type="submit" class="btn btn-primary" <c:if test="${messages.disableSubmit}">disabled</c:if>>Delete</button>
-        </form>
+        <h1>User Delete</h1>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${users}" var="user" >
+                    <tr>
+                        <td>${user.getUserName()}</td>
+                        <td>${user.getEmail()}</td>
+                        <td>${user.getFirstName()}</td>
+                        <td>${user.getLastName()}</td>
+                        <td>${user.getRole().name()}</td>
+                        <td>
+                            <form action="userdelete" method="post">
+                                <input type="hidden" name="userId" value="${user.getUserId()}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+        <p><strong>${title}</strong></p>
     </div>
 </body>
 </html>
