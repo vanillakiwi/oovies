@@ -21,8 +21,6 @@
                 <tr>
                     <th>Username</th>
                     <th>Email</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
                     <th>Role</th>
                     <th>Action</th>
                 </tr>
@@ -32,8 +30,6 @@
                     <tr>
                         <td>${user.getUserName()}</td>
                         <td>${user.getEmail()}</td>
-                        <td>${user.getFirstName()}</td>
-                        <td>${user.getLastName()}</td>
                         <td>${user.getRole().name()}</td>
                         <td>
                             <form action="userdelete" method="post">
