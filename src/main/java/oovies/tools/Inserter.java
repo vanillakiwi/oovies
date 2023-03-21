@@ -177,8 +177,7 @@ public class Inserter {
 			System.out.format("Reading director by directorName %s: id:%d name:%s gender:%s \n", directorName,
 					other.getDirectorId(), other.getName(), other.getGender().name());
 		}
-
-		
+	
 		/**
 		 * Read methods from Actor.
 		 */
@@ -246,6 +245,20 @@ public class Inserter {
 				other.getStudio().getStudioId(), other.getGenre().name());
 		}
 		
+		// Get movies' list by advanced search filter with rating = 4.0
+		String title = null;
+		Movie.Genre genre = null;
+		int year = 0;
+		double rating4 = 4.0;
+		for (Movie other : movieDao.getMovieByAdvancedSearch(title, genre, year, rating4)) {
+			System.out.format(
+				"Displaying results for Title: %s Genre: %s Year: %d Rating: %f\n"
+				+ "movieId:%d title:%s releaseDate:%s rating:%f durating:%d summary:%s directorId:%d studioId:%d genre:%s \n",
+				title, genre, year, rating4,
+				other.getMovieId(), other.getTitle(), other.getReleaseDate().toString(), other.getRating(),
+				other.getDuration(), other.getSummary(), other.getDirector().getDirectorId(),
+				other.getStudio().getStudioId(), other.getGenre().name());
+		}
 		
 		/**
 		 * Read methods from Cast.

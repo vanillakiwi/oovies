@@ -410,7 +410,7 @@ public class MovieDao {
 	            sb.append(" AND YEAR(ReleaseDate) = ?");
 	        }
 	        if (rating > 0.0) {
-	        	sb.append(" AND Rating >= ?");
+	        	sb.append(" AND Rating BETWEEN ? AND ?");
 	        }
 	        
 		    try (Connection connection = connectionManager.getConnection();
@@ -430,6 +430,7 @@ public class MovieDao {
 		        }
 		        if (rating > 0.0) {
 		        	selectStmt.setDouble(paramIndex++, rating);
+		        	selectStmt.setDouble(paramIndex++, rating + 0.9);
 		        }
 		        
 		        try (ResultSet results = selectStmt.executeQuery()) {
