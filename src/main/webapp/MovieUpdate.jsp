@@ -13,14 +13,15 @@
     <link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
 </head>
 <body>
-<%--<jsp:include page="NavBar.jsp" />--%>
+<jsp:include page="NavBar.jsp" />
 <div class="container my-5">
     <form action="movieupdate" method="post">
         <h1 class="text-center mb-4">Update movies's summary</h1>
-
+		<label class="form-label mt-4">Movie Id</label>
         <div class="form-group mr-2">
             <input id="movieid" type="text" name="movieid" class="form-control" placeholder="Please Enter the Movie Id">
         </div>
+        <label class="form-label mt-4">New Movie Summary</label>
         <div class="form-group mr-2">
             <input id="summary" type="text" name="summary" class="form-control" placeholder="Please Enter the New Summary">
         </div>
