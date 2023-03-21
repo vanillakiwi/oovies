@@ -16,7 +16,7 @@
 <jsp:include page="NavBar.jsp" />
 <div class="container my-5">
     <form action="movieupdate" method="post">
-        <h1 class="text-center mb-4">Update movies's summary</h1>
+        <h1 class="text-center mb-4">Update Movie's Summary</h1>
 		<label class="form-label mt-4">Movie Id</label>
         <div class="form-group mr-2">
             <input id="movieid" type="text" name="movieid" class="form-control" placeholder="Please Enter the Movie Id">
