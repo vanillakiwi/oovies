@@ -1,12 +1,12 @@
 package oovies.dal;
 
-import oovies.model.*;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
+import oovies.model.Person;
 
 public class PersonDao {
     protected ConnectionManager connectionManager;
@@ -33,9 +33,11 @@ public class PersonDao {
         String insertPerson = "INSERT INTO Person(UserName, Password, Email, Role) VALUES(?,?,?,?);";
         Connection connection = null;
         PreparedStatement insertStmt = null;
+        ResultSet resultKey = null;
         try {
             connection = connectionManager.getConnection();
-            insertStmt = connection.prepareStatement(insertPerson);
+            insertStmt = connection.prepareStatement(insertPerson,
+            		Statement.RETURN_GENERATED_KEYS);
             insertStmt.setString(1, person.getUserName());
             insertStmt.setString(2, person.getPassword());
             insertStmt.setString(3, person.getEmail());
@@ -43,7 +45,14 @@ public class PersonDao {
 
             insertStmt.executeUpdate();
 
-
+            resultKey = insertStmt.getGeneratedKeys();
+            int userId = -1;
+            if (resultKey.next()) {
+            	userId = resultKey.getInt(1);
+            } else {
+            	throw new SQLException("Unable to retrieve auto-generated key.");
+            }
+            person.setUserId(userId);
             return person;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,6 +63,9 @@ public class PersonDao {
             }
             if (insertStmt != null) {
                 insertStmt.close();
+            }
+            if (resultKey != null) {
+            	resultKey.close();
             }
         }
     }
@@ -241,11 +253,4 @@ public class PersonDao {
             }
         }
     }
-
-
-
-
-
-
-
 }

@@ -1,13 +1,14 @@
 package oovies.dal;
 
-import oovies.model.*;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import oovies.model.Director;
 
 
 public class DirectorDao {
@@ -35,15 +36,23 @@ public class DirectorDao {
         String insertDirector = "INSERT INTO Director(Name, Gender) VALUES(?,?);";
         Connection connection = null;
         PreparedStatement insertStmt = null;
+        ResultSet resultKey = null;
         try {
             connection = connectionManager.getConnection();
-            insertStmt = connection.prepareStatement(insertDirector);
+            insertStmt = connection.prepareStatement(insertDirector,
+            		Statement.RETURN_GENERATED_KEYS);
             insertStmt.setString(1, director.getName());
             insertStmt.setString(2, director.getGender().name());
 
             insertStmt.executeUpdate();
-
-
+            resultKey = insertStmt.getGeneratedKeys();
+            int directorId = -1;
+            if (resultKey.next()) {
+            	directorId = resultKey.getInt(1);
+            } else {
+            	throw new SQLException("Unable to retrieve auto-generated key.");
+            }
+            director.setDirectorId(directorId);
             return director;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,6 +63,9 @@ public class DirectorDao {
             }
             if (insertStmt != null) {
                 insertStmt.close();
+            }
+            if (resultKey != null) {
+            	resultKey.close();
             }
         }
     }

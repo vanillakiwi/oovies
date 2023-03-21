@@ -32,6 +32,10 @@ public class Person{
         this.email = email;
         this.role = role;
     }
+    
+    public Person(String userName) {
+    	this.userName = userName;
+    }
 
     public int getUserId() {
         return userId;
@@ -72,4 +76,10 @@ public class Person{
     public void setRole(Role role) {
         this.role = role;
     }
+
+	@Override
+	public String toString() {
+		return "Person [userId=" + userId + ", userName=" + userName + ", password=" + password + ", email=" + email
+				+ ", role=" + role + "]";
+	}
 }
