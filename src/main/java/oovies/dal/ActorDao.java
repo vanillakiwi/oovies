@@ -1,6 +1,7 @@
 package oovies.dal;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import oovies.model.Actor;
+import oovies.model.Movie;
+import oovies.model.Person;
+import oovies.model.Reviews;
 
 public class ActorDao {
 
@@ -197,6 +201,52 @@ public class ActorDao {
 				actors.add(actor);
 			}
             
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(selectStmt != null) {
+				selectStmt.close();
+			}
+			if(results != null) {
+				results.close();
+			}
+		}
+		return actors;
+	}
+	
+	/**
+	 * Get the Actors list by the given movie id.
+	 */
+	public List<Actor> getActorsByMovieId(int movieId) throws SQLException {
+		List<Actor> actors = new ArrayList<Actor>();
+		String selectActor = "SELECT Actor.ActorId,Actor.Name,Actor.Gender "
+				+ "FROM Actor "
+				+ "INNER JOIN Casts ON Actor.ActorId = Casts.ActorId "
+				+ "INNER JOIN Movie ON Casts.MovieId = Movie.MovieId "
+				+ "WHERE Movie.MovieId = ?;";
+		Connection connection = null;
+		PreparedStatement selectStmt = null;
+		ResultSet results = null;
+		try {
+			connection = connectionManager.getConnection();
+			selectStmt = connection.prepareStatement(selectActor);
+			selectStmt.setInt(1, movieId);
+			results = selectStmt.executeQuery();
+			
+			while(results.next()) {
+				int resultActorId = results.getInt("ActorId");
+				String name = results.getString("Name");
+				Actor.Gender gender = Actor.Gender.valueOf(
+						results.getString("Gender"));
+				
+				Actor actor = new Actor(resultActorId, name, gender);
+				
+				actors.add(actor);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw e;

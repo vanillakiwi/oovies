@@ -189,6 +189,11 @@ public class Inserter {
 			System.out.format("Reading actor by actorName %s: id:%d name:%s gender:%s \n", actorName,
 					other.getActorId(), other.getName(), other.getGender().name());
 		}
+		
+		for (Actor other : actorDao.getActorsByMovieId(movies.get(0).getMovieId())) {
+			System.out.format("Reading actor by movieId %s: id:%d name:%s gender:%s \n", movies.get(0).getMovieId(),
+					other.getActorId(), other.getName(), other.getGender().name());
+		}
 
 		
 		/**

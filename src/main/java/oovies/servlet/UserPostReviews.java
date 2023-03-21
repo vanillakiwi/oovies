@@ -50,4 +50,8 @@ public class UserPostReviews extends HttpServlet {
       req.getRequestDispatcher("/UserPostReviews.jsp").forward(req, resp);
     }
   }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
