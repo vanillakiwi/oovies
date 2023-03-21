@@ -21,37 +21,37 @@
 	        <div class="form-group">
 			  <label class="form-label mt-4">Movie Details</label>
 			  <div class="form-floating mb-3">
-			    <input type="text" class="form-control" id="title" name= "title" placeholder="Toy Story" required>
+			    <input type="text" class="form-control" id="title" name= "title" placeholder="Toy Story">
 			    <label for="title">Movie Title: *</label>
 			  </div>
 			  
+			  <div class="form-floating mb-3">
+			    <input type="text" class="form-control" id="rating" name= "rating" placeholder="4.5">
+			    <label for="rating">Rating: *</label>
+			  </div>
+			  
+			  
 	          <div class="form-floating mb-3">
-	          	<input type="text" class="form-control" id="duration" name="duration" placeholder="120" required>
+	          	<input type="text" class="form-control" id="duration" name="duration" placeholder="120">
 	          	<label for="duration" class="form-label">Duration: *</label>
 	          </div>
 	          
 			    <div class="form-floating mb-3">
-			    	<input type="text" class="form-control" id="directorId" name="directorId" placeholder="1" required>
+			    	<input type="text" class="form-control" id="directorId" name="directorId" placeholder="1">
 	                <label for="directorId" class="form-label">Director ID: *</label>
 	            </div>
 	             <div class="form-floating mb-3">
-	                <input type="text" class="form-control" id="studioId" name="studioId" placeholder="1" required>
+	                <input type="text" class="form-control" id="studioId" name="studioId" placeholder="1">
 	            	<label for="studioId" class="form-label">Studio ID: *</label>
 	            </div>
 	            
 	            <div class="form-floating mb-3">
-	                <input type="text" class="form-control" id="releasedate" name="releasedate" placeholder="yyyy-MM-dd" required>
-	           		<label for="releasedate" class="form-label">Release Date (yyyy-MM-dd): *</label>
-	            </div>
-	            
-	            <div>
-			  		<label for="rating">Rating: *</label>
-			  		<input type="number" id="rating" name= "rating" step="0.10" min="0.00" max="5.00" required>
-			  	</div>
-			  
+	                <input type="text" class="form-control" id="releasedate" name="releasedate" placeholder="2023-01-01">
+	           		<label for="releasedate" class="form-label">Release Date: *</label>
+	            </div>	
 	            <div>
 	            <label for="genre" class="form-label mt-4">Genre: *</label>
-			      <select class="form-select" name="genre" id="genre" required>
+			      <select class="form-select" name="genre" id="genre">
 			        	<option value="DRAMA">Drama</option>
 	        			<option value="COMEDY">Comedy</option>
 	        			<option value="ACTION">Action</option>
@@ -64,7 +64,7 @@
 			      </select>	 
 			    </div>
 	            <div>
-		            <label for="summary" class="form-label mt-4">Summary: </label>
+		            <label for="summary" class="form-label mt-4">Summary: *</label>
 				    <textarea class="form-control" id="summary" name="summary" rows="3"></textarea>
 			    </div>
 			</div>
