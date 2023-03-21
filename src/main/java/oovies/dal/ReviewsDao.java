@@ -174,7 +174,7 @@ public class ReviewsDao {
 	 */
 	public List<Reviews> getReviewsByMovieId(int movieId) throws SQLException {
 		List<Reviews> reviews = new ArrayList<Reviews>();
-		String selectReview = "SELECT ReviewId,Created,Content,UserName "
+		String selectReview = "SELECT ReviewId,Created,Content,UserId "
 				+ "FROM Reviews "
 				+ "WHERE MovieId=?;";
 		Connection connection = null;
