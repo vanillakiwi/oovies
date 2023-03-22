@@ -45,6 +45,7 @@ public class UserPostReviews extends HttpServlet {
       reviewsDao.create(review);
       req.setAttribute("success", "Review posted successfully.");
       req.getRequestDispatcher("/UserPostReviews.jsp").forward(req, resp);
+      resp.sendRedirect("movie-details?id=" + movie.getMovieId());
     } catch (SQLException e) {
       e.printStackTrace();
       req.setAttribute("error", "Unable to post review. Please try again later.");

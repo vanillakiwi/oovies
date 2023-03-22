@@ -13,23 +13,26 @@
 				<li class="nav-item">
 			    	<a class="nav-link" href="FindMovies.jsp">Home</a>
 			  	</li>
-			  	<li class="nav-item">
-			    	<a class="nav-link" href="UserCreate.jsp">User Create</a>
-			  	</li>
-			  	<li class="nav-item">
-			    	<a class="nav-link" href="UserUpdate.jsp">User Update</a>
-			  	</li>
-			 	<li class="nav-item">
-			    	<a class="nav-link" href="UserDelete.jsp">User Delete</a>
-			  	</li>
-				<li class="nav-item">
-		          	<a class="nav-link" href="MovieCreate.jsp">Movie Create</a>
+		        <li class="nav-item">
+				    <a class="nav-link" href="<c:if test='${sessionScope.loggedIn == true and sessionScope.role == "USER"}'>UserProfile.jsp</c:if>
+				    						  <c:if test='${sessionScope.loggedIn == true and sessionScope.role == "ADMIN"}'>AdminProfile.jsp</c:if>
+				    						  <c:if test='${sessionScope.loggedIn != true}'>Login.jsp</c:if>">
+				        Profile
+				    </a>
+				</li>
+		        <li class="nav-item">
+				    <a class="nav-link" href="<c:if test='${sessionScope.loggedIn == true and sessionScope.role == "USER"}'>UserProfile.jsp</c:if>
+				    					      <c:if test='${sessionScope.loggedIn == true and sessionScope.role == "ADMIN"}'>AdminProfile.jsp</c:if>
+				    					      <c:if test='${sessionScope.loggedIn != true}'>Login.jsp</c:if>">
+				        Login
+				    </a>
 		        </li>
 		        <li class="nav-item">
-		        	<a class="nav-link" href="MovieUpdate.jsp">Movie Update</a>
-		        </li>
-		        <li class="nav-item">
-		          	<a class="nav-link" href="MovieDelete.jsp">Movie Delete</a>
+				    <a class="nav-link" href="<c:if test='${sessionScope.loggedIn == true and sessionScope.role == "USER"}'>UserProfile.jsp</c:if>
+				    						  <c:if test='${sessionScope.loggedIn == true and sessionScope.role == "ADMIN"}'>AdminProfile.jsp</c:if>
+				    						  <c:if test='${sessionScope.loggedIn != true}'>UserCreate.jsp</c:if>">
+				        Sign Up
+				    </a>
 		        </li>
 			</ul>
 		</div>

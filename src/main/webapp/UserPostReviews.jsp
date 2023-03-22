@@ -5,29 +5,26 @@
 <head>
 	<meta charset="UTF-8">
 	<title>New Review</title>
-  	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  	<link rel="stylesheet" href="https://bootswatch.com/5/morph/bootstrap.min.css">
 </head>
 <body>
   <%-- Display any success or error messages --%>
   <% if (request.getAttribute("success") != null) { %>
-    <p style="color: green"><%= request.getAttribute("success") %></p>
+    <div class="alert alert-success"><%= request.getAttribute("success") %></div>
   <% } else if (request.getAttribute("error") != null) { %>
-    <p style="color: red"><%= request.getAttribute("error") %></p>
+    <div class="alert alert-danger"><%= request.getAttribute("error") %></div>
   <% } %>
 
   <%-- Display the new review form --%>
-  <h1>New Review</h1>
-	 <form class="p-3 border rounded">
-	  <h2 class="mb-3">New Review</h2>
+  <div class="container mt-5">
+    <h1 class="text-center">New Review</h1>
+	 <form class="p-3 border rounded" method="post" action="${pageContext.request.contextPath}/userpostreviews">
 	  <div class="mb-3">
-	    <label for="movieTitle" class="form-label">Title</label>
-	    <input type="text" class="form-control" id="movieTitle" name="movieTitle">
-	  </div>
-	  <div class="mb-3">
-	    <label for="review" class="form-label">Review</label>
-	    <textarea class="form-control" id="review" name="review" rows="5"></textarea>
+	    <label for="content" class="form-label">Review</label>
+	    <textarea class="form-control" id="content" name="content" rows="5"></textarea>
 	  </div>
 	  <button type="submit" class="btn btn-primary">Submit</button>
 	</form>
+  </div>
 </body>
 </html>

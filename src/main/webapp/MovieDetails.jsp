@@ -15,7 +15,14 @@
 <body>
 	<jsp:include page="NavBar.jsp" />
 	<div class="container my-5">
-		<h2 class="mb-2">Movie Details</h2>
+		<div class="d-flex justify-content-between mb-2">
+			<h2 class="mb-0">Movie Details</h2>
+			<c:if test="${sessionScope.loggedIn == true}">
+			  <form method="post" action="logout">
+			    <button type="submit" class="btn btn-danger">Logout</button>
+			  </form>
+			</c:if>
+		</div>
 		<table class="table">
 			<thead>
 				<tr>
@@ -63,7 +70,12 @@
 			</tbody>
 		</table>
 		
-		<h4 class="mb-2">Reviews for <c:out value="${movie.getTitle()}" /></h4>
+		<div class="d-flex justify-content-between mb-2">
+			<h4 class="mb-2">Reviews for <c:out value="${movie.getTitle()}" /></h4>
+			<c:if test="${sessionScope.loggedIn == true}">
+				<a href="UserPostReviews.jsp">Post review</a>
+			</c:if>
+		</div>
 		<table class="table">
 			<thead>
 				<tr>
