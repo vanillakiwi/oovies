@@ -15,14 +15,8 @@
 <body>
 	<jsp:include page="NavBar.jsp" />
 	<div class="container my-5">
-		<div class="d-flex justify-content-between mb-2">
-			<h2 class="mb-0">Movie Details</h2>
-			<c:if test="${sessionScope.loggedIn == true}">
-			  <form method="post" action="logout">
-			    <button type="submit" class="btn btn-danger">Logout</button>
-			  </form>
-			</c:if>
-		</div>
+		<h2 class="mb-0">Movie Details</h2>
+		
 		<table class="table">
 			<thead>
 				<tr>

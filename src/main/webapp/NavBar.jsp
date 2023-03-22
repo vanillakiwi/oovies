@@ -14,26 +14,31 @@
 			    	<a class="nav-link" href="FindMovies.jsp">Home</a>
 			  	</li>
 		        <li class="nav-item">
-				    <a class="nav-link" href="<c:if test='${sessionScope.loggedIn == true and sessionScope.role == "USER"}'>UserProfile.jsp</c:if>
-				    						  <c:if test='${sessionScope.loggedIn == true and sessionScope.role == "ADMIN"}'>AdminProfile.jsp</c:if>
-				    						  <c:if test='${sessionScope.loggedIn != true}'>Login.jsp</c:if>">
+				    <a class="nav-link" href="<c:if test='${sessionScope.loggedIn != true}'>Login.jsp</c:if>
+				    						  <c:if test='${sessionScope.loggedIn == true and sessionScope.role == "USER"}'>UserProfile.jsp</c:if>
+				    						  <c:if test='${sessionScope.loggedIn == true and sessionScope.role == "ADMIN"}'>AdminProfile.jsp</c:if>">
 				        Profile
 				    </a>
 				</li>
-		        <li class="nav-item">
-				    <a class="nav-link" href="<c:if test='${sessionScope.loggedIn == true and sessionScope.role == "USER"}'>UserProfile.jsp</c:if>
-				    					      <c:if test='${sessionScope.loggedIn == true and sessionScope.role == "ADMIN"}'>AdminProfile.jsp</c:if>
-				    					      <c:if test='${sessionScope.loggedIn != true}'>Login.jsp</c:if>">
-				        Login
-				    </a>
-		        </li>
-		        <li class="nav-item">
-				    <a class="nav-link" href="<c:if test='${sessionScope.loggedIn == true and sessionScope.role == "USER"}'>UserProfile.jsp</c:if>
-				    						  <c:if test='${sessionScope.loggedIn == true and sessionScope.role == "ADMIN"}'>AdminProfile.jsp</c:if>
-				    						  <c:if test='${sessionScope.loggedIn != true}'>UserCreate.jsp</c:if>">
-				        Sign Up
-				    </a>
-		        </li>
+		        <c:if test="${sessionScope.loggedIn != true}">
+			        <li class="nav-item">
+					    <a class="nav-link" href="Login.jsp">
+					        Login
+					    </a>
+			        </li>
+			        <li class="nav-item">
+					    <a class="nav-link" href="UserCreate.jsp">
+					        Register
+					    </a>
+			        </li>
+		        </c:if>
+		        <c:if test="${sessionScope.loggedIn == true}">
+			        <li class="nav-item">
+					    <form method="post" action="logout">
+			    			<button type="submit" class="btn btn-outline-danger btn-sm mt-1">Logout</button>
+			  			</form>
+			        </li>
+		        </c:if>
 			</ul>
 		</div>
 	</nav>
