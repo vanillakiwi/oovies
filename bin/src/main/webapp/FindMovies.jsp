@@ -71,7 +71,7 @@
 			<tbody>
 				<c:forEach items="${movies}" var="movie" >
 					<tr>
-						<td><a href="moviedetails?id=${movie.getMovieId()}"><c:out value="${movie.getMovieId()}" /></a></td>
+						<td><c:out value="${movie.getMovieId()}" /></td>
 						<td><c:out value="${movie.getTitle()}" /></td>
 						<td><c:out value="${movie.getReleaseDate()}" /></td>
 						<td><c:out value="${movie.getRating()}" /></td>

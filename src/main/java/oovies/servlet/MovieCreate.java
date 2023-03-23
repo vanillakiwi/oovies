@@ -33,6 +33,8 @@ public class MovieCreate extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		movieDao = MovieDao.getInstance();
+		directorDao = DirectorDao.getInstance();
+		studioDao = StudioDao.getInstance();
 	}
 	
 	@Override
