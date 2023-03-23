@@ -64,7 +64,12 @@
 			</tbody>
 		</table>
 		
-		<h4 class="mb-2">Reviews for <c:out value="${movie.getTitle()}" /></h4>
+		<div class="row">
+			<h4 class="mb-2">Reviews for <c:out value="${movie.getTitle()}" /></h4>
+			<c:if test="${sessionScope.loggedIn == true}">
+					<a href="UserPostReview.jsp">Post review</a>
+			</c:if>
+		</div>
 		<table class="table">
 			<thead>
 				<tr>
@@ -84,27 +89,8 @@
 					</tr>
 				</c:forEach>
 			</tbody>
-		</table>
-		
-		<c:if test="${sessionScope.loggedIn == true}">
-		    <h4 class="mb-2">Post a new review for <c:out value="${movie.getTitle()}" /></h4>
-		    <form class="p-3 border rounded" method="post" action="${pageContext.request.contextPath}/moviedetails">
-		        <input type="hidden" name="userId" value="${sessionScope.user.getUserId()}" />
-		        <div class="mb-3">
-		            <label for="content" class="form-label">Review</label>
-		            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
-		        </div>
-		        <button type="submit" class="btn btn-primary">Submit</button>
-		    </form>
-		    <% if (request.getAttribute("error") != null) { %>
-		        <div class="alert alert-danger mt-3"><%= request.getAttribute("errorMessage") %></div>
-		    <% } %>
-		</c:if>		
+		</table>	
 	</div>
 </body>
 </html>
-<script>
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
-</script>
+
