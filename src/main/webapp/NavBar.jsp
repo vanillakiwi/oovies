@@ -14,11 +14,11 @@
 			    	<a class="nav-link" href="FindMovies.jsp">Home</a>
 			  	</li>
 		        <li class="nav-item">
-				    <a class="nav-link" href="<c:if test='${sessionScope.loggedIn != true}'>Login.jsp</c:if>
-				    						  <c:if test='${sessionScope.loggedIn == true and sessionScope.role == "USER"}'>UserProfile.jsp</c:if>
-				    						  <c:if test='${sessionScope.loggedIn == true and sessionScope.role == "ADMIN"}'>AdminProfile.jsp</c:if>">
-				        Profile
-				    </a>
+				    <a class="nav-link" href="<c:if test='${sessionScope.loggedIn == true and sessionScope.role == "USER"}'>UserProfile.jsp</c:if>
+										      <c:if test='${sessionScope.loggedIn == true and sessionScope.role == "ADMIN"}'>AdminProfile.jsp</c:if>
+										      <c:if test='${sessionScope.loggedIn != true}'>Login.jsp</c:if>">
+					    Profile
+					</a>
 				</li>
 		        <c:if test="${sessionScope.loggedIn != true}">
 			        <li class="nav-item">

@@ -4,6 +4,9 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String username = (String) session.getAttribute("username");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +18,12 @@
 <body>
 	<jsp:include page="NavBar.jsp" />
 	<div class="container my-5">
+		<c:if test="${sessionScope.loggedIn == true}">
+			<div class="container-fluid text-end">
+		    	<label class="ms-3 mt-3">Welcome <%= username %></label>
+		    </div>
+		</c:if>
+
 		<form action="findmovies" method="post">
 			<h1 class="mb-4">Search movies</h1>
 			

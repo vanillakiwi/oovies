@@ -64,12 +64,7 @@
 			</tbody>
 		</table>
 		
-		<div class="d-flex justify-content-between mb-2">
-			<h4 class="mb-2">Reviews for <c:out value="${movie.getTitle()}" /></h4>
-			<c:if test="${sessionScope.loggedIn == true}">
-				<a href="UserPostReviews.jsp">Post review</a>
-			</c:if>
-		</div>
+		<h4 class="mb-2">Reviews for <c:out value="${movie.getTitle()}" /></h4>
 		<table class="table">
 			<thead>
 				<tr>
@@ -90,6 +85,21 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		
+		<c:if test="${sessionScope.loggedIn == true}">
+			<form class="p-3 border rounded" method="post" action="${pageContext.request.contextPath}/userpostreviews">
+			    <input type="hidden" name="movieId" value="${movie.getMovie()}" />
+			    <input type="hidden" name="userId" value="${user.getUser()}" />
+			    <div class="mb-3">
+			        <label for="content" class="form-label">Post a review</label>
+			        <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+			    </div>
+			    <button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+			<% if (request.getAttribute("error") != null) { %>
+			    <div class="alert alert-danger mt-3"><%= request.getAttribute("errorMessage") %></div>
+			<% } %>
+		</c:if>
 	</div>
 </body>
 </html>
