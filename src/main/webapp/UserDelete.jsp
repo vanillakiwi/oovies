@@ -32,7 +32,7 @@
                         <td>${user.getEmail()}</td>
                         <td>${user.getRole().name()}</td>
                         <td>
-                            <form action="userdelete" method="post">
+                            <form action="userdelete" method="post" id="deleteUserForm">
                                 <input type="hidden" name="userId" value="${user.getUserId()}">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
@@ -43,5 +43,12 @@
         </table>
         <p><strong>${title}</strong></p>
     </div>
+
+    <script>
+        document.getElementById("deleteUserForm").addEventListener("submit", function() {
+            // Send an HTTP GET request to the current URL to refresh the page
+            window.location.href = window.location.href;
+        });
+    </script>
 </body>
 </html>
