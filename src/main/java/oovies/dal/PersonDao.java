@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 import oovies.model.Person;
 
 public class PersonDao {
@@ -69,6 +73,50 @@ public class PersonDao {
             }
         }
     }
+    
+    /**
+     * Get all records by fetching it from your MySQL instance.
+     * This runs a SELECT statement and returns Person instances.
+     */
+
+    public List<Person> getAllPersons() throws SQLException {
+        
+    	List<Person> persons = new ArrayList<>();
+    	String selectPerson = "SELECT UserId, UserName, Password, Email, Role FROM Person;";
+        Connection connection = null;
+        PreparedStatement selectStmt = null;
+        ResultSet results = null;
+        try {
+            connection = connectionManager.getConnection();
+            selectStmt = connection.prepareStatement(selectPerson);
+            
+            results = selectStmt.executeQuery();
+            while (results.next()) {
+                int userId = results.getInt("UserId");
+                String resultPersonName = results.getString("UserName");
+                String password = results.getString("Password");
+                String email = results.getString("Email");
+                String role = results.getString("Role");
+                Person person = new Person(userId, resultPersonName, password, email, Person.Role.valueOf(role));
+                persons.add(person);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            if (selectStmt != null) {
+                selectStmt.close();
+            }
+            if (results != null) {
+                results.close();
+            }
+        }
+        return persons;
+    }
+    
 
 
     /**
@@ -105,7 +153,9 @@ public class PersonDao {
      * This runs a SELECT statement and returns a single Person instance.
      */
     public Person getPersonByUserName(String userName) throws SQLException {
-        String selectPerson = "SELECT UserId, UserName, Password, Email, Role FROM Person WHERE UserName=?;";
+        
+    	
+    	String selectPerson = "SELECT UserId, UserName, Password, Email, Role FROM Person WHERE UserName=?;";
         Connection connection = null;
         PreparedStatement selectStmt = null;
         ResultSet results = null;
@@ -189,6 +239,7 @@ public class PersonDao {
         return getPersonByUserName(userName).getUserId();
 
     }
+
 
 
     /**

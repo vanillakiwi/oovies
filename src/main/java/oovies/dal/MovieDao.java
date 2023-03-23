@@ -416,6 +416,7 @@ public class MovieDao {
 		    try (Connection connection = connectionManager.getConnection();
 		         PreparedStatement selectStmt = connection.prepareStatement(sb.toString())) {
 
+
 		    	// Set the parameters for the query
 		        int paramIndex = 1;
 		        if (title != null && !title.isEmpty()) {

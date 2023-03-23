@@ -20,7 +20,7 @@
 			    	<a class="nav-link" href="UserUpdate.jsp">User Update</a>
 			  	</li>
 			 	<li class="nav-item">
-			    	<a class="nav-link" href="UserDelete.jsp">User Delete</a>
+			    	<a class="nav-link" href="userdelete">User Delete</a>
 			  	</li>
 				<li class="nav-item">
 		          	<a class="nav-link" href="MovieCreate.jsp">Movie Create</a>
