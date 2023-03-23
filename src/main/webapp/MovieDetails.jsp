@@ -87,19 +87,24 @@
 		</table>
 		
 		<c:if test="${sessionScope.loggedIn == true}">
-			<form class="p-3 border rounded" method="post" action="${pageContext.request.contextPath}/userpostreviews">
-			    <input type="hidden" name="movieId" value="${movie.getMovie()}" />
-			    <input type="hidden" name="userId" value="${user.getUser()}" />
-			    <div class="mb-3">
-			        <label for="content" class="form-label">Post a review</label>
-			        <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
-			    </div>
-			    <button type="submit" class="btn btn-primary">Submit</button>
-			</form>
-			<% if (request.getAttribute("error") != null) { %>
-			    <div class="alert alert-danger mt-3"><%= request.getAttribute("errorMessage") %></div>
-			<% } %>
-		</c:if>
+		    <h4 class="mb-2">Post a new review for <c:out value="${movie.getTitle()}" /></h4>
+		    <form class="p-3 border rounded" method="post" action="${pageContext.request.contextPath}/moviedetails">
+		        <input type="hidden" name="userId" value="${sessionScope.user.getUserId()}" />
+		        <div class="mb-3">
+		            <label for="content" class="form-label">Review</label>
+		            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+		        </div>
+		        <button type="submit" class="btn btn-primary">Submit</button>
+		    </form>
+		    <% if (request.getAttribute("error") != null) { %>
+		        <div class="alert alert-danger mt-3"><%= request.getAttribute("errorMessage") %></div>
+		    <% } %>
+		</c:if>		
 	</div>
 </body>
 </html>
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>

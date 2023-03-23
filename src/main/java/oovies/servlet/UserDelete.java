@@ -47,7 +47,8 @@ public class UserDelete extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) 
+    		throws ServletException, IOException {
         // Map for storing messages.
         Map<String, String> messages = new HashMap<String, String>();
         req.setAttribute("messages", messages);
@@ -68,6 +69,7 @@ public class UserDelete extends HttpServlet {
             throw new IOException(e);
         }
         
-        req.getRequestDispatcher("/UserDelete.jsp").forward(req, resp);
+        // Redirect to UserDelete servlet to display updated list of users
+        resp.sendRedirect(req.getContextPath() + "/userdelete");
     }
 }
