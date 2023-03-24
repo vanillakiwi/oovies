@@ -35,17 +35,19 @@ public class UserPostReview extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = (String) req.getSession().getAttribute("username");
         int movieId = Integer.parseInt(req.getParameter("movieId"));
-        String content = req.getParameter("content");
-        int userId = Integer.parseInt(req.getSession().getAttribute("userId").toString());
+        String content = req.getParameter("reviewContent");
 
+        System.out.format("%d %s %s", movieId, username, content);
+        
         Date now = new Date();
         Person user;
         Movie movie;
         Reviews review;
 
         try {
-            user = personDao.getPersonByUserId(userId);
+            user = personDao.getPersonByUserName(username);
             movie = movieDao.getMovieById(movieId);
 
             if (user == null || movie == null) {

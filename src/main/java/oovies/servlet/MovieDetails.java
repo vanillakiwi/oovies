@@ -59,18 +59,7 @@ public class MovieDetails extends HttpServlet {
         req.setAttribute("movie", movie);
         req.setAttribute("reviews", reviews);
         req.setAttribute("actors", actors);
-
-        // Get user ID if logged in
-        Person user = (Person) req.getSession().getAttribute("user");
-        int userId = user.getUserId();
-        
-        // Add post review hyperlink with parameter passing
-        String postReviewUrl = "/usercreatereview?movieid=" + movieId;
-        postReviewUrl += "&userid=" + userId;
-        req.setAttribute("postReviewUrl", postReviewUrl);
-        
         req.getRequestDispatcher("/MovieDetails.jsp").forward(req, resp);
-
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -85,6 +74,15 @@ public class MovieDetails extends HttpServlet {
         List<Actor> actors = new ArrayList<Actor>();
 
         Movie movie = null;
+        
+        // Get user ID if logged in
+        Person user = (Person) req.getSession().getAttribute("user");
+        int userId = user.getUserId();
+        
+        // Add post review hyperlink with parameter passing
+        String postReviewUrl = "/usercreatereview?movieid=" + movieId;
+        postReviewUrl += "&userid=" + userId;
+        req.setAttribute("postReviewUrl", postReviewUrl);
 
         try {
             movie = movieDao.getMovieById(movieId);
