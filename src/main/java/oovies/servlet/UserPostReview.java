@@ -24,19 +24,39 @@ public class UserPostReview extends HttpServlet {
     private ReviewsDao reviewsDao;
     private PersonDao personDao;
     private MovieDao movieDao;
+    private int movieId;
 
     @Override
     public void init() throws ServletException {
+    	
         super.init();
         reviewsDao = ReviewsDao.getInstance();
         personDao = PersonDao.getInstance();
         movieDao = MovieDao.getInstance();
+       
+        
     }
+    
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        
+        Map<String, String> messages = new HashMap<String, String>();
+        req.setAttribute("messages", messages);
 
+        movieId = Integer.parseInt(req.getParameter("id"));
+        
+        req.getRequestDispatcher("/UserPostReview.jsp").forward(req, resp);
+    }
+    
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    	
+    	Map<String, String[]> map = req.getParameterMap();
+     	for(String s: map.keySet()) System.out.println(s);
+     	
+    	
         String username = (String) req.getSession().getAttribute("username");
-        int movieId = Integer.parseInt(req.getParameter("movieId"));
+        
         String content = req.getParameter("reviewContent");
 
         System.out.format("%d %s %s", movieId, username, content);

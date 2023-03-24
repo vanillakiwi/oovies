@@ -67,7 +67,7 @@
 		<div class="row">
 			<h4 class="mb-2">Reviews for <c:out value="${movie.getTitle()}" /></h4>
 			<c:if test="${sessionScope.loggedIn == true}">
-				<a href="UserPostReview.jsp" onclick="setMovieId('${movie.getMovieId()}')">Post a review</a>
+				<a href="userpostreview?id=${movie.getMovieId()}" onclick="setMovieId('${movie.getMovieId()}')">Post a review</a>
 			</c:if>
 			<script>
 				function setMovieId(movieId) {
@@ -98,4 +98,3 @@
 	</div>
 </body>
 </html>
-
