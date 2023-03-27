@@ -25,6 +25,7 @@ public class MovieDetails extends HttpServlet {
     private ReviewsDao reviewsDao;
     private ActorDao actorDao;
     protected PersonDao personDao;
+    protected RatingDao ratingDao;
 
     @Override
     public void init() throws ServletException {
@@ -32,6 +33,7 @@ public class MovieDetails extends HttpServlet {
         reviewsDao = ReviewsDao.getInstance();
         actorDao = ActorDao.getInstance();
         personDao = PersonDao.getInstance();
+        ratingDao = RatingDao.getInstance();
     }
     
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -72,6 +74,7 @@ public class MovieDetails extends HttpServlet {
         
         List<Reviews> reviews = new ArrayList<Reviews>();
         List<Actor> actors = new ArrayList<Actor>();
+        List<Rating> ratings = new ArrayList<Rating>();
 
         Movie movie = null;
         
@@ -83,11 +86,31 @@ public class MovieDetails extends HttpServlet {
         String postReviewUrl = "/usercreatereview?movieid=" + movieId;
         postReviewUrl += "&userid=" + userId;
         req.setAttribute("postReviewUrl", postReviewUrl);
+        
+        Rating rating = null;
+        double score = Double.parseDouble(req.getParameter("rating"));
 
+        // Check if user has already rated this movie
+        try {
+			ratings = ratingDao.getRatingByUserId(userId);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        for (Rating r : ratings) {
+            if (r.getUser().getUserId() == userId && r.getMovie().getMovieId() == movieId) {
+            	req.setAttribute("error", "You have already rated this movie.");
+            	return;
+            }
+    	}
         try {
             movie = movieDao.getMovieById(movieId);
             reviews = reviewsDao.getReviewsByMovieId(movieId);
             actors = actorDao.getActorsByMovieId(movieId);
+            
+            rating = new Rating(score, user, movie);
+            ratingDao.create(rating);
+            resp.sendRedirect("/movieDetails?id=" + movieId);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new IOException(e);
