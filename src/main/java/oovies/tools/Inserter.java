@@ -447,6 +447,8 @@ public class Inserter {
 		System.out.format("After update movie summary, summary:%s\n", movie.getSummary());
 	}
 
+	
+
 	/*
 	 * public static void deleteAll() throws SQLException {
 	 * System.out.println("Deleting all users ..."); for (Person person : persons) {
@@ -479,4 +481,5 @@ public class Inserter {
 	 * System.out.println("Deleting all ratings ..."); for (Rating rating: ratings)
 	 * { ratingDao.delete(rating); } }
 	 */
+
 }

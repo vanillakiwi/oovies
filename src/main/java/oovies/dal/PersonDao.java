@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 import oovies.model.Person;
 
@@ -114,6 +116,7 @@ public class PersonDao {
         }
         return persons;
     }
+    
 
 
     /**
@@ -150,7 +153,9 @@ public class PersonDao {
      * This runs a SELECT statement and returns a single Person instance.
      */
     public Person getPersonByUserName(String userName) throws SQLException {
-        String selectPerson = "SELECT UserId, UserName, Password, Email, Role FROM Person WHERE UserName=?;";
+        
+    	
+    	String selectPerson = "SELECT UserId, UserName, Password, Email, Role FROM Person WHERE UserName=?;";
         Connection connection = null;
         PreparedStatement selectStmt = null;
         ResultSet results = null;
@@ -234,6 +239,7 @@ public class PersonDao {
         return getPersonByUserName(userName).getUserId();
 
     }
+
 
 
     /**
