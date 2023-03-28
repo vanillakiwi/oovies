@@ -93,6 +93,22 @@ String username = (String) session.getAttribute("username");
 				</c:forEach>
 			</tbody>
 		</table>
+		<nav aria-label="Search results pagination">
+		    <ul class="pagination justify-content-center">
+		        <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
+		            <a class="page-link" href="?page=${currentPage - 1}&amp;resultsPerPage=${resultsPerPage}" tabindex="-1">Previous</a>
+		        </li>
+		        <c:forEach begin="1" end="${totalPages}" var="pageNum">
+		            <li class="page-item ${pageNum == currentPage ? 'active' : ''}">
+		                <a class="page-link" href="?page=${pageNum}&amp;resultsPerPage=${resultsPerPage}">${pageNum}</a>
+		            </li>
+		        </c:forEach>
+		        <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
+		            <a class="page-link" href="?page=${currentPage + 1}&amp;resultsPerPage=${resultsPerPage}">Next</a>
+		        </li>
+		    </ul>
+		</nav>
+
 	</div>
 </body>
 </html>
