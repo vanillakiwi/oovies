@@ -11,7 +11,7 @@
 <body>
 	<jsp:include page="NavBar.jsp" />
     <div class="container mt-5">
-        <h1 class="text-center mb-5">Sign Up</h1>
+        <h1 class="text-center mb-5">Register</h1>
         <p class="text-center">
             <span id="successMessage"><b>${messages.success}</b></span>
         </p>

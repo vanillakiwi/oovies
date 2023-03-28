@@ -15,7 +15,8 @@
 <body>
 	<jsp:include page="NavBar.jsp" />
 	<div class="container my-5">
-		<h2 class="mb-2">Movie Details</h2>
+		<h2 class="mb-0">Movie Details</h2>
+		
 		<table class="table">
 			<thead>
 				<tr>
@@ -45,7 +46,36 @@
 			</tbody>
 		</table>
 		
-		<h4 class="mb-2">Reviews for <c:out value="${movie.getTitle()}" /></h4>
+		<h4 class="mb-2">Casts for <c:out value="${movie.getTitle()}" /></h4>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">ActorId</th>
+					<th scope="col">Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${actors}" var="actor" >
+					<tr>
+						<td><c:out value="${actor.getActorId()}" /></td>
+						<td><c:out value="${actor.getName()}" /></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		
+		<div class="row">
+			<h4 class="mb-2">Reviews for <c:out value="${movie.getTitle()}" /></h4>
+			<c:if test="${sessionScope.loggedIn == true}">
+				<a href="userpostreview?id=${movie.getMovieId()}" onclick="setMovieId('${movie.getMovieId()}')">Post a review</a>
+				<a href="userpostrating?id=${movie.getMovieId()}" onclick="setMovieId('${movie.getMovieId()}')">Post a rating</a>
+			</c:if>
+			<script>
+				function setMovieId(movieId) {
+				  sessionStorage.setItem('movieId', movieId);
+				}
+			</script>
+		</div>
 		<table class="table">
 			<thead>
 				<tr>
@@ -65,8 +95,7 @@
 					</tr>
 				</c:forEach>
 			</tbody>
-		</table>
+		</table>	
 	</div>
 </body>
 </html>
-

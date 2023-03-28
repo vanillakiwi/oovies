@@ -76,8 +76,6 @@ String username = (String) session.getAttribute("username");
 					<th scope="col">Rating</th>
 					<th scope="col">Duration</th>
 					<th scope="col">Summary</th>
-					<th scope="col">DirectorId</th>
-					<th scope="col">StudioId</th>
 					<th scope="col">Genre</th>
 				</tr>
 			</thead>
@@ -90,8 +88,6 @@ String username = (String) session.getAttribute("username");
 						<td><c:out value="${movie.getRating()}" /></td>
 						<td><c:out value="${movie.getDuration()}" /></td>
 						<td><c:out value="${movie.getSummary()}" /></td>
-						<td><c:out value="${movie.getDirector().getDirectorId()}" /></td>
-						<td><c:out value="${movie.getStudio().getStudioId()}" /></td>
 						<td><c:out value="${movie.getGenre()}" /></td>
 					</tr>
 				</c:forEach>
