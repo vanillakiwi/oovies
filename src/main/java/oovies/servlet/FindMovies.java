@@ -38,18 +38,20 @@ public class FindMovies extends HttpServlet {
 	    String yearStr = req.getParameter("year");
 	    String ratingStr = req.getParameter("rating");
 	    String pageStr = req.getParameter("page");
-	    String limitStr = req.getParameter("limit");
+	    String resultsPerPageStr = req.getParameter("resultsPerPage");
 
 	    int page = 1;
-	    int limit = 20;
+	    int resultsPerPage = 20;
 
 	    if (pageStr != null && !pageStr.isEmpty()) {
 	        page = Integer.parseInt(pageStr);
 	    }
 
-	    if (limitStr != null && !limitStr.isEmpty()) {
-	        limit = Integer.parseInt(limitStr);
+	    if (resultsPerPageStr != null && !resultsPerPageStr.isEmpty()) {
+	        resultsPerPage = Integer.parseInt(resultsPerPageStr);
 	    }
+	    
+	    int offset = (page - 1) * resultsPerPage;
 
 	    Movie.Genre genre = null;
 	    if (genreStr != null && !genreStr.isEmpty()) {
@@ -67,17 +69,18 @@ public class FindMovies extends HttpServlet {
 	    }
 
 	    try {
-	        movies = movieDao.getMovieByAdvancedSearch(title, genre, year, rating, page, limit);
+	    	movies = movieDao.getMovieByAdvancedSearch(title, genre, year, rating, offset, resultsPerPage);
+	        int totalMovies = movies.size();
+	        int totalPages = (int) Math.ceil((double) totalMovies / resultsPerPage);
 	        messages.put("success", "Displaying results for: " + title);
+	        req.setAttribute("movies", movies);
+	        req.setAttribute("totalPages", totalPages);
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        throw new IOException(e);
 	    }
-	    int totalPages = (int) Math.ceil((double) movies.size() / limit);
 	    
-	    req.setAttribute("movies", movies);
 	    req.setAttribute("currentPage", page);
-	    req.setAttribute("totalPages", totalPages);
 	    req.getRequestDispatcher("/FindMovies.jsp").forward(req, resp);
 	}
 
@@ -92,14 +95,21 @@ public class FindMovies extends HttpServlet {
 	    String genreStr = req.getParameter("genre");
 	    String yearStr = req.getParameter("year");
 	    String ratingStr = req.getParameter("rating");
-	    
+
 	    // get pagination parameters from request
-	    int currentPage = Integer.parseInt(req.getParameter("page"));
-	    int resultsPerPage = Integer.parseInt(req.getParameter("perPage"));
-	    
+	    int currentPage = 1;
+	    int resultsPerPage = 20;
+
+	    if (req.getParameter("page") != null) {
+	        currentPage = Integer.parseInt(req.getParameter("page"));
+	    }
+	    if (req.getParameter("resultsPerPage") != null) {
+	        resultsPerPage = Integer.parseInt(req.getParameter("resultsPerPage"));
+	    }
+
 	    // calculate offset based on current page and results per page
 	    int offset = (currentPage - 1) * resultsPerPage;
-	    int limit = 20;
+	    int limit = resultsPerPage;
 
 	    Movie.Genre genre = null;
 	    if (genreStr != null && !genreStr.isEmpty()) {
@@ -118,19 +128,21 @@ public class FindMovies extends HttpServlet {
 
 	    try {
 	        movies = movieDao.getMovieByAdvancedSearch(title, genre, year, rating, offset, limit);
+	        int totalMovies = movies.size();
+	        int totalPages = (int) Math.ceil((double) totalMovies / resultsPerPage);
 	        messages.put("success", "Displaying results for Title: " + title + " Genre: " + genreStr + " Year: " + yearStr
 	                + " Rating: " + ratingStr);
+	        req.setAttribute("movies", movies);
+	        req.setAttribute("currentPage", currentPage);
+	        req.setAttribute("resultsPerPage", resultsPerPage);
+	        req.setAttribute("totalPages", totalPages);
+	        req.setAttribute("totalMovies", totalMovies);
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        throw new IOException(e);
 	    }
-	    int totalPages = (int) Math.ceil((double) movies.size() / limit);
-	    
-	    req.setAttribute("movies", movies);
-	    req.setAttribute("currentPage", currentPage);
-	    req.setAttribute("resultsPerPage", resultsPerPage);
-	    req.setAttribute("totalPages", totalPages);
-	    
-		req.getRequestDispatcher("/FindMovies.jsp").forward(req, resp);
+
+	    req.getRequestDispatcher("/FindMovies.jsp").forward(req, resp);
 	}
+
 }
