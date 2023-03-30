@@ -47,7 +47,7 @@ public class MovieDetails extends HttpServlet {
         String like = req.getParameter("like");
         String username = req.getParameter("username");
         Movie movie;
-        int maxPage;
+        int maxPage = 1;
         int page;
         int loveCount = 0;
         Person user = null;

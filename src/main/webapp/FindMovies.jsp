@@ -160,15 +160,26 @@ request.setAttribute("ratinge", rating);
                 <li ><a class="page-link" href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${pageIndex-1>0?pageIndex-1:1}"/>">Previous</a></li>
                 
  
-                <c:forEach begin="1" end="${maxPage<10?maxPage-1:9}" varStatus="loop">
+                <c:forEach begin="1" end="${maxPage<10&&maxPage>0?maxPage-1:maxPage<=0?0:9}" varStatus="loop">
                     <c:set var="active" value="${loop.index==pageIndex?'active':''}"/>
                     <li class="page-item" class="${active}"><a class="page-link"
                             href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${loop.index}"/>">${loop.index}</a>
                     </li>
                 </c:forEach>
-                <li class="page-item" class="${active}" ><a class="page-link"
+                
+<%
+                Object max = request.getAttribute("maxPage") == null ? 0: request.getAttribute("maxPage");
+                int maxPage = (int)max;
+                if (maxPage != 0) { 
+%>
+                <li class="page-item" class="${maxPage==0?active:inactive}" ><a class="page-link"
                             href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${maxPage}"/>">${maxPage}</a>
                 </li>
+<%
+      }
+%>
+                
+                
                 
                 <li><a class="page-link" href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${pageIndex<maxPage?pageIndex+1:maxPage}"/>">Next</a></li>
             </ul>

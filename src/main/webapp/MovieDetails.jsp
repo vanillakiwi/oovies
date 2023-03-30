@@ -8,6 +8,7 @@
 <%
 String username = (String) session.getAttribute("username");
 
+
 %>    
 
 <!DOCTYPE html>
@@ -132,15 +133,25 @@ String username = (String) session.getAttribute("username");
                 <li ><a class="page-link" href="<c:url value="/moviedetails?id=${movie.getMovieId()}&pageIndex=${pageIndex-1>0?pageIndex-1:1}"/>">Previous</a></li>
                 
  
-                <c:forEach begin="1" end="${maxPage<10?maxPage-1:9}" varStatus="loop">
+                <c:forEach begin="1" end="${maxPage<10&&maxPage>0?maxPage-1:maxPage<=0?0:9}" varStatus="loop">
                     <c:set var="active" value="${loop.index==pageIndex?'active':''}"/>
                     <li class="page-item" class="${active}"><a class="page-link"
                             href="<c:url value="/moviedetails?id=${movie.getMovieId()}&pageIndex=${loop.index}"/>">${loop.index}</a>
                     </li>
                 </c:forEach>
+<%				
+				Object max = request.getAttribute("maxPage") == null ? 0: request.getAttribute("maxPage");
+				int maxPage = (int)max;
+                
+                if (maxPage != 0) { 
+%>
                 <li class="page-item" class="${active}"><a class="page-link"
                             href="<c:url value="/moviedetails?id=${movie.getMovieId()}&pageIndex=${maxPage}"/>">${maxPage}</a>
                 </li>
+<%
+      }
+ %>
+                
                 
                 
                 <li><a class="page-link" href="<c:url value="/moviedetails?id=${movie.getMovieId()}&pageIndex=${pageIndex<maxPage?pageIndex+1:maxPage}"/>">Next</a></li>
