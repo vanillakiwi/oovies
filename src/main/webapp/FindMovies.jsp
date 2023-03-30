@@ -6,7 +6,16 @@
     pageEncoding="UTF-8"%>
 <%
 String username = (String) session.getAttribute("username");
+String title = request.getParameter("title");
+session.setAttribute("title", title);
+String genre = request.getParameter("genre");
+request.setAttribute("genre", genre);
+String year = request.getParameter("year");
+request.setAttribute("year", year);
+String rating = request.getParameter("rating");
+request.setAttribute("ratinge", rating);
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +33,7 @@ String username = (String) session.getAttribute("username");
 		    </div>
 		</c:if>
 
-		<form action="findmovies" method="post">
+		<form action="findmovies" method="get">
 			<h1 class="mb-4">Search movies</h1>
 			
 			<div class="row">
@@ -93,7 +102,7 @@ String username = (String) session.getAttribute("username");
 				</c:forEach>
 			</tbody>
 		</table>
-		<nav aria-label="Search results pagination">
+<%-- 		<nav aria-label="Search results pagination">
 		    <ul class="pagination justify-content-center">
 		        <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
 		            <a class="page-link" href="?page=${currentPage - 1}&amp;resultsPerPage=${resultsPerPage}" tabindex="-1">Previous</a>
@@ -144,7 +153,27 @@ String username = (String) session.getAttribute("username");
 		            <a class="page-link" href="?page=${currentPage + 1}&amp;resultsPerPage=${resultsPerPage}">Next</a>
 		        </li>
 		    </ul>
-		</nav>
+		</nav> --%>
+		
+		<nav>
+            <ul class="pagination justify-content-center">
+                <li ><a class="page-link" href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${pageIndex-1>0?pageIndex-1:1}"/>">Previous</a></li>
+                
+ 
+                <c:forEach begin="1" end="${maxPage<10?maxPage-1:9}" varStatus="loop">
+                    <c:set var="active" value="${loop.index==pageIndex?'active':''}"/>
+                    <li class="page-item" class="${active}"><a class="page-link"
+                            href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${loop.index}"/>">${loop.index}</a>
+                    </li>
+                </c:forEach>
+                <li class="page-item" class="${active}" ><a class="page-link"
+                            href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${maxPage}"/>">${maxPage}</a>
+                  </li>
+                
+                <li><a class="page-link" href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${pageIndex<maxPage?pageIndex+1:maxPage}"/>">Next</a></li>
+            </ul>
+        </nav>
+		
 	</div>
 </body>
 </html>

@@ -37,19 +37,21 @@ public class FindMovies extends HttpServlet {
 	    String genreStr = req.getParameter("genre");
 	    String yearStr = req.getParameter("year");
 	    String ratingStr = req.getParameter("rating");
-	    String pageStr = req.getParameter("page");
-	    String resultsPerPageStr = req.getParameter("resultsPerPage");
+	    String pageStr = req.getParameter("pageIndex");
+//	    String resultsPerPageStr = req.getParameter("resultsPerPage");
 
-	    int page = 1;
+//	    int page = 1;
 	    int resultsPerPage = 20;
+	    int page = 1;
+	    int maxPage;
 
 	    if (pageStr != null && !pageStr.isEmpty()) {
 	        page = Integer.parseInt(pageStr);
 	    }
 
-	    if (resultsPerPageStr != null && !resultsPerPageStr.isEmpty()) {
-	        resultsPerPage = Integer.parseInt(resultsPerPageStr);
-	    }
+//	    if (resultsPerPageStr != null && !resultsPerPageStr.isEmpty()) {
+//	        resultsPerPage = Integer.parseInt(resultsPerPageStr);
+//	    }
 	    
 	    int offset = (page - 1) * resultsPerPage;
 
@@ -70,17 +72,18 @@ public class FindMovies extends HttpServlet {
 
 	    try {
 	    	movies = movieDao.getMovieByAdvancedSearch(title, genre, year, rating, offset, resultsPerPage);
+	    	maxPage = movieDao.getMovieSizeByAdvancedSearch(title, genre, year, rating,resultsPerPage);
 	        int totalMovies = movies.size();
 	        int totalPages = (int) Math.ceil((double) totalMovies / resultsPerPage);
 	        messages.put("success", "Displaying results for: " + title);
 	        req.setAttribute("movies", movies);
-	        req.setAttribute("totalPages", totalPages);
+	        req.setAttribute("maxPage", maxPage);
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        throw new IOException(e);
 	    }
 	    
-	    req.setAttribute("currentPage", page);
+	    req.setAttribute("pageIndex", page);
 	    req.getRequestDispatcher("/FindMovies.jsp").forward(req, resp);
 	}
 
@@ -141,7 +144,7 @@ public class FindMovies extends HttpServlet {
 	        e.printStackTrace();
 	        throw new IOException(e);
 	    }
-
+	   
 	    req.getRequestDispatcher("/FindMovies.jsp").forward(req, resp);
 	}
 
