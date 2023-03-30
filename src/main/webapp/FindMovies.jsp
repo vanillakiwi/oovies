@@ -168,7 +168,7 @@ request.setAttribute("ratinge", rating);
                 </c:forEach>
                 <li class="page-item" class="${active}" ><a class="page-link"
                             href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${maxPage}"/>">${maxPage}</a>
-                  </li>
+                </li>
                 
                 <li><a class="page-link" href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${pageIndex<maxPage?pageIndex+1:maxPage}"/>">Next</a></li>
             </ul>

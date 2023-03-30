@@ -140,7 +140,7 @@ String username = (String) session.getAttribute("username");
                 </c:forEach>
                 <li class="page-item" class="${active}"><a class="page-link"
                             href="<c:url value="/moviedetails?id=${movie.getMovieId()}&pageIndex=${maxPage}"/>">${maxPage}</a>
-                    </li>
+                </li>
                 
                 
                 <li><a class="page-link" href="<c:url value="/moviedetails?id=${movie.getMovieId()}&pageIndex=${pageIndex<maxPage?pageIndex+1:maxPage}"/>">Next</a></li>
