@@ -52,14 +52,14 @@ public class UserPostReview extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     	
     	Map<String, String[]> map = req.getParameterMap();
-     	for(String s: map.keySet()) System.out.println(s);
+//     	for(String s: map.keySet()) System.out.println(s);
      	
     	
         String username = (String) req.getSession().getAttribute("username");
         
         String content = req.getParameter("reviewContent");
 
-        System.out.format("%d %s %s", movieId, username, content);
+//        System.out.format("%d %s %s", movieId, username, content);
         
         Date now = new Date();
         Person user;
