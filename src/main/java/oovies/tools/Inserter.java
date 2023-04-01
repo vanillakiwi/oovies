@@ -256,7 +256,7 @@ public class Inserter {
 		Movie.Genre genre = null;
 		int year = 0;
 		double rating4 = 4.0;
-		for (Movie other : movieDao.getMovieByAdvancedSearch(title, genre, year, rating4)) {
+		for (Movie other : movieDao.getMovieByAdvancedSearch(title, genre, year, rating4, 1, 20)) {
 			System.out.format(
 				"Displaying results for Title: %s Genre: %s Year: %d Rating: %f\n"
 				+ "movieId:%d title:%s releaseDate:%s rating:%f durating:%d summary:%s directorId:%d studioId:%d genre:%s \n",

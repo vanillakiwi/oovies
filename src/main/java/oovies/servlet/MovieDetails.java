@@ -26,7 +26,7 @@ public class MovieDetails extends HttpServlet {
     private ActorDao actorDao;
     protected PersonDao personDao;
     protected RatingDao ratingDao;
-
+    protected LoveDao loveDao;
     @Override
     public void init() throws ServletException {
         movieDao = MovieDao.getInstance();
@@ -34,6 +34,7 @@ public class MovieDetails extends HttpServlet {
         actorDao = ActorDao.getInstance();
         personDao = PersonDao.getInstance();
         ratingDao = RatingDao.getInstance();
+        loveDao = LoveDao.getInstance();
     }
     
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -43,17 +44,28 @@ public class MovieDetails extends HttpServlet {
         req.setAttribute("messages", messages);
 
         String movieId = req.getParameter("id");
-        
+       
         Movie movie;
-        
+        int maxPage = 1;
+        int page;
+        int loveCount = 0;
+      
         List<Reviews> reviews = new ArrayList<Reviews>();
         List<Actor> actors = new ArrayList<Actor>();
-        
+             
         try {
+        	page = req.getParameter("pageIndex") != null ? Integer.parseInt(req.getParameter("pageIndex")) : 1;
             movie = movieDao.getMovieById(Integer.parseInt(movieId));
-            reviews = reviewsDao.getReviewsByMovieId(Integer.parseInt(movieId));
+            reviews = reviewsDao.queryByMovieId(page, Integer.parseInt(movieId));
+//            reviews = reviewsDao.getReviewsByMovieId(Integer.parseInt(movieId));
             actors = actorDao.getActorsByMovieId(Integer.parseInt(movieId));
-        } catch (SQLException e) {
+            maxPage = reviewsDao.getMaxPage(5, Integer.parseInt(movieId));
+         
+                     
+            
+            
+            loveCount = loveDao.getLoveCountByMovieId(Integer.parseInt(movieId));
+        } catch (Exception e) {
             e.printStackTrace();
             throw new IOException(e);
         }
@@ -61,6 +73,9 @@ public class MovieDetails extends HttpServlet {
         req.setAttribute("movie", movie);
         req.setAttribute("reviews", reviews);
         req.setAttribute("actors", actors);
+        req.setAttribute("maxPage", maxPage);
+        req.setAttribute("pageIndex", page);
+        req.setAttribute("likes", loveCount);
         req.getRequestDispatcher("/MovieDetails.jsp").forward(req, resp);
     }
 
@@ -71,15 +86,55 @@ public class MovieDetails extends HttpServlet {
         req.setAttribute("messages", messages);
 
         int movieId = Integer.parseInt(req.getParameter("id"));
-        
+        String like = req.getParameter("like");
+        String username = req.getParameter("username");
+        int loveCount = 0;
         List<Reviews> reviews = new ArrayList<Reviews>();
         List<Actor> actors = new ArrayList<Actor>();
         List<Rating> ratings = new ArrayList<Rating>();
-
+        Person user = null;
+        
+        
+        
         Movie movie = null;
+        if(like != null) {
+        	
+        	try {
+        	movie = movieDao.getMovieById(movieId);
+        	if(username != null) {
+            	 user = personDao.getPersonByUserName(username);
+            }
+        	
+        	if(user != null) {
+            	List<Love> list = loveDao.getLoveByUserId(user.getUserId());
+            	if(list.size() == 0) {
+            		loveDao.create(new Love(user, movie));
+            	}
+            	else {
+            		loveDao.delete(list.get(0));
+            	}
+            	
+            }
+            
+            loveCount = loveDao.getLoveCountByMovieId(movieId);
+        	}
+        	catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        	finally {
+        		req.setAttribute("movie", movie);
+                req.setAttribute("reviews", reviews);
+                req.setAttribute("actors", actors);
+                req.setAttribute("likes", loveCount);
+                resp.sendRedirect("/Oovies/moviedetails?id=" + movieId);
+        	}
+        }
+        
+        else {
+        	
         
         // Get user ID if logged in
-        Person user = (Person) req.getSession().getAttribute("user");
+        user = (Person) req.getSession().getAttribute("user");
         int userId = user.getUserId();
         
         // Add post review hyperlink with parameter passing
@@ -97,6 +152,7 @@ public class MovieDetails extends HttpServlet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+        
         for (Rating r : ratings) {
             if (r.getUser().getUserId() == userId && r.getMovie().getMovieId() == movieId) {
             	req.setAttribute("error", "You have already rated this movie.");
@@ -110,16 +166,23 @@ public class MovieDetails extends HttpServlet {
             
             rating = new Rating(score, user, movie);
             ratingDao.create(rating);
+            
+            
             resp.sendRedirect("/movieDetails?id=" + movieId);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new IOException(e);
-        }
+        } catch (Exception e) {
+			
+			e.printStackTrace();
+		}
         
         req.setAttribute("movie", movie);
         req.setAttribute("reviews", reviews);
         req.setAttribute("actors", actors);
+        
         req.getRequestDispatcher("/MovieDetails.jsp").forward(req, resp);
+        }
 
     }
 }

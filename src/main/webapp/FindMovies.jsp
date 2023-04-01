@@ -6,7 +6,16 @@
     pageEncoding="UTF-8"%>
 <%
 String username = (String) session.getAttribute("username");
+String title = request.getParameter("title");
+session.setAttribute("title", title);
+String genre = request.getParameter("genre");
+request.setAttribute("genre", genre);
+String year = request.getParameter("year");
+request.setAttribute("year", year);
+String rating = request.getParameter("rating");
+request.setAttribute("ratinge", rating);
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +33,7 @@ String username = (String) session.getAttribute("username");
 		    </div>
 		</c:if>
 
-		<form action="findmovies" method="post">
+		<form action="findmovies" method="get">
 			<h1 class="mb-4">Search movies</h1>
 			
 			<div class="row">
@@ -93,6 +102,89 @@ String username = (String) session.getAttribute("username");
 				</c:forEach>
 			</tbody>
 		</table>
+<%-- 		<nav aria-label="Search results pagination">
+		    <ul class="pagination justify-content-center">
+		        <li class="page-item ${currentPage == 1 ? 'disabled' : ''}">
+		            <a class="page-link" href="?page=${currentPage - 1}&amp;resultsPerPage=${resultsPerPage}" tabindex="-1">Previous</a>
+		        </li>
+		        <c:choose>
+		            <c:when test="${totalPages <= 5}">
+		                <c:forEach begin="1" end="${totalPages}" var="pageNum">
+		                    <li class="page-item ${pageNum == currentPage ? 'active' : ''}">
+		                        <a class="page-link" href="?page=${pageNum}&amp;resultsPerPage=${resultsPerPage}">${pageNum}</a>
+		                    </li>
+		                </c:forEach>
+		            </c:when>
+		            <c:otherwise>
+		                <c:set var="startPage" value="${currentPage - 2}" />
+		                <c:set var="endPage" value="${currentPage + 2}" />
+		                <c:if test="${startPage < 1}">
+		                    <c:set var="startPage" value="1" />
+		                    <c:set var="endPage" value="${startPage + 4}" />
+		                </c:if>
+		                <c:if test="${endPage > totalPages}">
+		                    <c:set var="endPage" value="${totalPages}" />
+		                    <c:set var="startPage" value="${endPage - 4}" />
+		                </c:if>
+		                <c:if test="${currentPage > 3}">
+		                    <li class="page-item">
+		                        <a class="page-link" href="?page=1&amp;resultsPerPage=${resultsPerPage}">1</a>
+		                    </li>
+		                    <li class="page-item disabled">
+		                        <span class="page-link">...</span>
+		                    </li>
+		                </c:if>
+		                <c:forEach begin="${startPage}" end="${endPage}" var="pageNum">
+		                    <li class="page-item ${pageNum == currentPage ? 'active' : ''}">
+		                        <a class="page-link" href="?page=${pageNum}&amp;resultsPerPage=${resultsPerPage}">${pageNum}</a>
+		                    </li>
+		                </c:forEach>
+		                <c:if test="${currentPage <= totalPages - 3}">
+		                    <li class="page-item disabled">
+		                        <span class="page-link">...</span>
+		                    </li>
+		                    <li class="page-item">
+		                        <a class="page-link" href="?page=${totalPages}&amp;resultsPerPage=${resultsPerPage}">${totalPages}</a>
+		                    </li>
+		                </c:if>
+		            </c:otherwise>
+		        </c:choose>
+		        <li class="page-item ${currentPage == totalPages ? 'disabled' : ''}">
+		            <a class="page-link" href="?page=${currentPage + 1}&amp;resultsPerPage=${resultsPerPage}">Next</a>
+		        </li>
+		    </ul>
+		</nav> --%>
+		
+		<nav>
+            <ul class="pagination justify-content-center">
+                <li ><a class="page-link" href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${pageIndex-1>0?pageIndex-1:1}"/>">Previous</a></li>
+                
+ 
+                <c:forEach begin="1" end="${maxPage<10&&maxPage>0?maxPage-1:maxPage<=0?0:9}" varStatus="loop">
+                    <c:set var="active" value="${loop.index==pageIndex?'active':''}"/>
+                    <li class="page-item" class="${active}"><a class="page-link"
+                            href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${loop.index}"/>">${loop.index}</a>
+                    </li>
+                </c:forEach>
+                
+<%
+                Object max = request.getAttribute("maxPage") == null ? 0: request.getAttribute("maxPage");
+                int maxPage = (int)max;
+                if (maxPage != 0) { 
+%>
+                <li class="page-item" class="${maxPage==0?active:inactive}" ><a class="page-link"
+                            href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${maxPage}"/>">${maxPage}</a>
+                </li>
+<%
+      }
+%>
+                
+                
+                
+                <li><a class="page-link" href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${pageIndex<maxPage?pageIndex+1:maxPage}"/>">Next</a></li>
+            </ul>
+        </nav>
+		
 	</div>
 </body>
 </html>

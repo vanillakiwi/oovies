@@ -167,6 +167,14 @@ public class LoveDao {
 		return loves;
 	}
 	
+	/**
+	 * Get love count by movieId
+	 */
+	public int getLoveCountByMovieId(int movieId) throws Exception{
+		return getLoveByMovieId(movieId).size();
+		
+	}
+	
 	
 	/** 
 	 * Get all Love record by the given movie id.
