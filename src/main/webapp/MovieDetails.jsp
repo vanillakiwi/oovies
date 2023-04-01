@@ -30,6 +30,7 @@ String username = (String) session.getAttribute("username");
   <input type="hidden" name="id" value="${movie.getMovieId()}">
   <input type="hidden" name="pageIndex" value="${pageIndex}">
   <input type="hidden" name="username" value="${username}">
+ 
   
     <button type="submit" name="like" value="like" >  
     

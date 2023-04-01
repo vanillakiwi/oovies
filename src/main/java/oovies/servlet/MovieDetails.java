@@ -93,6 +93,7 @@ public class MovieDetails extends HttpServlet {
         List<Actor> actors = new ArrayList<Actor>();
         List<Rating> ratings = new ArrayList<Rating>();
         Person user = null;
+        int page = 1;
         
         
         
@@ -100,6 +101,7 @@ public class MovieDetails extends HttpServlet {
         if(like != null) {
         	
         	try {
+        	page = req.getParameter("pageIndex") != null ? Integer.parseInt(req.getParameter("pageIndex")) : 1;
         	movie = movieDao.getMovieById(movieId);
         	if(username != null) {
             	 user = personDao.getPersonByUserName(username);
@@ -122,11 +124,12 @@ public class MovieDetails extends HttpServlet {
         		e.printStackTrace();
         	}
         	finally {
+        		
         		req.setAttribute("movie", movie);
                 req.setAttribute("reviews", reviews);
                 req.setAttribute("actors", actors);
                 req.setAttribute("likes", loveCount);
-                resp.sendRedirect("/Oovies/moviedetails?id=" + movieId);
+                resp.sendRedirect("/Oovies/moviedetails?id=" + movieId+"&pageIndex="+page);
         	}
         }
         
