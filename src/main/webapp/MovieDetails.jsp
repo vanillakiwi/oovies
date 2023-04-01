@@ -26,7 +26,7 @@ String username = (String) session.getAttribute("username");
 	
 	<div class="container my-5">
 		<h2 class="mb-0">Movie Details</h2>
-<form action="moviedetails" method="get">
+<form action="moviedetails" method="post">
   <input type="hidden" name="id" value="${movie.getMovieId()}">
   <input type="hidden" name="pageIndex" value="${pageIndex}">
   <input type="hidden" name="username" value="${username}">
