@@ -26,26 +26,25 @@ String username = (String) session.getAttribute("username");
 	
 	<div class="container my-5">
 		<h2 class="mb-0">Movie Details</h2>
-<form action="moviedetails" method="post">
-  <input type="hidden" name="id" value="${movie.getMovieId()}">
-  <input type="hidden" name="pageIndex" value="${pageIndex}">
-  <input type="hidden" name="username" value="${username}">
- 
-  
-    <button type="submit" name="like" value="like" >  
-    
-        <span id="like" style="color: rgb(180, 0, 0);">
-             &#10084;&nbsp;
-        </span>
-        <span id="sumLike">
-            ${likes}
-        </span>
-    </button>
-</form>
+		<form action="moviedetails" method="post">
+		  <input type="hidden" name="id" value="${movie.getMovieId()}">
+		  <input type="hidden" name="pageIndex" value="${pageIndex}">
+		  <input type="hidden" name="username" value="${username}">
+		 
+		  
+		    <button type="submit" name="like" value="like" >  
+		    
+		        <span id="like" style="color: rgb(180, 0, 0);">
+		             &#10084;&nbsp;
+		        </span>
+		        <span id="sumLike">
+		            ${likes}
+		        </span>
+		    </button>
+		</form>
 
 		<c:set var="maxPage" value="${maxPage}"/>
 
-		
 		<table class="table">
 			<thead>
 				<tr>

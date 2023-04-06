@@ -24,7 +24,7 @@ String username = (String) session.getAttribute("username");
 			<label class="col-sm-2 col-form-label" for="username" id="username">Username: <c:out value="${username}"/></label>
 			<label class="col-sm-2 col-form-label" for="movieId" id="movieId">Movie ID: <span id="movieIdSpan"></span></label>
 			<label for="score" class="col-sm-2 col-form-label">Rating score</label>
-			<input type="number" class="me-2"id="rating" name= "rating" step="0.10" min="0.00" max="5.00" required>
+			<input type="number" class="me-2"id="score" name= "score" step="0.10" min="0.00" max="5.00" required>
 			<button type="submit" class="btn btn-primary btn-sm ms-2">Submit</button>
 		</form>
 	</div>
