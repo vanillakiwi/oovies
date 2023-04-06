@@ -23,6 +23,7 @@ String username = (String) session.getAttribute("username");
         </div> 
 	    
 	    <%-- TODO --%>
+	    <form action="userprofile" method="get">
 	    <h4 class="ms-3 mt-2">Follows</h4>    
         <table class="table ms-3 me-3 mb-3">
 			<thead>
@@ -40,6 +41,7 @@ String username = (String) session.getAttribute("username");
 				</c:forEach>
 			</tbody>
 		</table>
+	     <%-- TODO --%>
 	     
 	    <h4 class="ms-3 mt-2">Loves</h4>    
         <table class="table ms-3 me-3 mb-3">
@@ -52,12 +54,15 @@ String username = (String) session.getAttribute("username");
 			<tbody>
 				<c:forEach items="${loves}" var="love" >
 					<tr>
+					
 						<td><c:out value="${love.getLoveId()}" /></td>
 						<td><a href="moviedetails?id=${love.getMovie().getMovieId()}"><c:out value="${love.getMovie().getMovieId()}" /></a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+	     
+	     
 	     
 	    <h4 class="ms-3 mt-2">Ratings</h4>    
         <table class="table ms-3 me-3 mb-3">
@@ -100,5 +105,6 @@ String username = (String) session.getAttribute("username");
 				</c:forEach>
 			</tbody>
 		</table>
+		</form>
     </body>
 </html>
