@@ -23,7 +23,8 @@ String username = (String) session.getAttribute("username");
         </div> 
 	    
 	    <%-- TODO --%>
-	    <form action="userprofile" method="get">
+	    <form action="userprofile" method="post">
+	    <button type="submit" class="btn btn-outline-primary me-3 ms-3 mb-2">Profile</button>
 	    <h4 class="ms-3 mt-2">Follows</h4>    
         <table class="table ms-3 me-3 mb-3">
 			<thead>
