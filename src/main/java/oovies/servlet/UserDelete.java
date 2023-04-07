@@ -68,8 +68,7 @@ public class UserDelete extends HttpServlet {
             e.printStackTrace();
             throw new IOException(e);
         }
-        
-        // Redirect to UserDelete servlet to display updated list of users
+
         resp.sendRedirect(req.getContextPath() + "/userdelete");
     }
 }

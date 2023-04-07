@@ -467,4 +467,48 @@ public class MovieDao {
 		    }
 		    return movies;
 		}
+		
+		public List<Movie> getTopRatedMovies() throws SQLException {
+		    List<Movie> topRatedMovies = new ArrayList<>();
+
+		    String sql = "SELECT MovieId, Title, ReleaseDate, Rating, Duration, Summary, DirectorId, StudioId, Genre "
+		    		+ "FROM Movie "
+		    		+ "ORDER BY Rating DESC "
+		    		+ "LIMIT 10";
+
+		    try (Connection connection = connectionManager.getConnection();
+		         PreparedStatement selectStmt = connection.prepareStatement(sql)) {
+
+		        try (ResultSet results = selectStmt.executeQuery()) {
+		            DirectorDao directorDao = DirectorDao.getInstance();
+		            StudioDao studioDao = StudioDao.getInstance();
+
+		            while (results.next()) {
+		                int resultMovieId = results.getInt("MovieId");
+		                String resultTitle = results.getString("Title");
+		                Date releaseDate = results.getDate("ReleaseDate");
+		                Double resultRating = results.getDouble("Rating");
+		                int duration = results.getInt("Duration");
+		                String summary = results.getString("Summary");
+		                int directorId = results.getInt("DirectorId");
+		                int studioId = results.getInt("StudioID");
+
+		                Director director = directorDao.getDirectorByDirectorId(directorId);
+		                Studio studio = studioDao.getStudioById(studioId);
+		                Movie.Genre resultGenre = Movie.Genre.valueOf(results.getString("Genre"));
+
+		                Movie movie = new Movie(resultMovieId, resultTitle, releaseDate, resultRating, duration, summary,
+		                        director, studio, resultGenre);
+
+		                topRatedMovies.add(movie);
+		                System.out.println(movie.getTitle());
+		            }
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        throw e;
+		    }
+		    return topRatedMovies;
+		}
+
 }
