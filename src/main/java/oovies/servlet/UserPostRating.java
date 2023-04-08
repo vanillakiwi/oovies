@@ -45,14 +45,10 @@ public class UserPostRating extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     	
     	Map<String, String[]> map = req.getParameterMap();
-     	for(String s: map.keySet()) System.out.println(s);
      	
-    	
         String username = (String) req.getSession().getAttribute("username");
         
         double score = Double.parseDouble(req.getParameter("score"));
-
-        System.out.format("%d %s %f", movieId, username, score);
         
         Person user;
         Movie movie;

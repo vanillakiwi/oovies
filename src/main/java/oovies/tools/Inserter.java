@@ -61,6 +61,64 @@ public class Inserter {
 				studios.get(1), Movie.Genre.DRAMA));
 		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
 				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		
+		//Testing pagination
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
 
 		casts.add(new Casts(movies.get(0), actors.get(0)));
 		casts.add(new Casts(movies.get(1), actors.get(0)));
