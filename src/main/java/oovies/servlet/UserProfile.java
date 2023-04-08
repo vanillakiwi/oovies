@@ -21,18 +21,16 @@ import javax.servlet.annotation.*;
 public class UserProfile extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private MovieDao movieDao;
+ 
     private ReviewsDao reviewsDao;
-    private ActorDao actorDao;
+   
     protected PersonDao personDao;
     protected RatingDao ratingDao;
     protected LoveDao loveDao;
     
     @Override
-    public void init() throws ServletException {
-        movieDao = MovieDao.getInstance();
+    public void init() throws ServletException {    
         reviewsDao = ReviewsDao.getInstance();
-        actorDao = ActorDao.getInstance();
         personDao = PersonDao.getInstance();
         ratingDao = RatingDao.getInstance();
         loveDao = LoveDao.getInstance();
@@ -86,6 +84,7 @@ public class UserProfile extends HttpServlet {
         req.getRequestDispatcher("/UserProfile.jsp").forward(req, resp);
     }
     
+    /*
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -119,7 +118,7 @@ public class UserProfile extends HttpServlet {
              e.printStackTrace();
              throw new IOException(e);
          }
-         
+         System.out.println("love len is " + loves.size());
          System.out.println("review len is " + reviews.size());
          System.out.println("rating len is " + ratings.size());
          
@@ -130,6 +129,8 @@ public class UserProfile extends HttpServlet {
          req.getRequestDispatcher("/UserProfile.jsp").forward(req, resp);
     	
     }
+    
+    */
      
     
 }
