@@ -11,17 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import oovies.dal.*;
-import oovies.model.Reviews;
+import oovies.dal.RatingDao;
+import oovies.model.Rating;
 
-@WebServlet("/reviewdelete")
-public class ReviewDelete extends HttpServlet {
+@WebServlet("/ratingdelete")
+public class RatingDelete extends HttpServlet {
 	
-	protected ReviewsDao reviewDao;
+	protected RatingDao ratingDao;
 	
 	@Override
 	public void init() throws ServletException {
-		reviewDao = ReviewsDao.getInstance();
+		ratingDao = RatingDao.getInstance();
 	}
 	
 	@Override
@@ -29,8 +29,8 @@ public class ReviewDelete extends HttpServlet {
 		throws ServletException, IOException {
 		Map<String, String> messages = new HashMap<>();
 		req.setAttribute("messages", messages);
-		messages.put("title", "Delete Review");
-		req.getRequestDispatcher("/ReviewDelete.jsp").forward(req, resp);
+		messages.put("title", "Delete Rating");
+		req.getRequestDispatcher("/RatingDelete.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -39,23 +39,23 @@ public class ReviewDelete extends HttpServlet {
 		Map<String, String> messages = new HashMap<>();
 		req.setAttribute("messages", messages);
 		
-		String reviewId = req.getParameter("reviewid");
-		if (reviewId == null) {
-			messages.put("title", "Invalid Review Id");
+		String ratingId = req.getParameter("ratingid");
+		if (ratingId == null) {
+			messages.put("title", "Invalid Rating Id");
         	messages.put("disableSubmit", "true");
         } else {
-        	Reviews review = new Reviews(Integer.valueOf(reviewId));
+        	Rating rating = new Rating(Integer.valueOf(ratingId));
         	try {
-        		Reviews currentReview = reviewDao.getReviewById(Integer.valueOf(reviewId));
-        		review = reviewDao.delete(review);
-				if(currentReview == null && review == null){
-					messages.put("title", "Review does not exist.");
+        		Rating currentRating = ratingDao.getRatingById(Integer.valueOf(ratingId));
+        		rating = ratingDao.delete(rating);
+				if(currentRating == null && rating == null){
+					messages.put("title", "Rating does not exist.");
 				}
-        		else if (review == null) {
-        			messages.put("title", "Successfully deleted " + currentReview.getReviewId());
+        		else if (rating == null) {
+        			messages.put("title", "Successfully deleted " + currentRating.getRatingId());
         			messages.put("disableSubmit", "true");
         		} else {
-        			messages.put("title", "Failed to delete " + currentReview.getReviewId());
+        			messages.put("title", "Failed to delete " + currentRating.getRatingId());
 		        	messages.put("disableSubmit", "false");
         		}
         	} catch (SQLException e) {
@@ -63,6 +63,6 @@ public class ReviewDelete extends HttpServlet {
 				throw new IOException(e);
 	        }
         }
-        req.getRequestDispatcher("/ReviewDelete.jsp").forward(req, resp);
+        req.getRequestDispatcher("/RatingDelete.jsp").forward(req, resp);
 	}
 }
