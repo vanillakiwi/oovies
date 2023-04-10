@@ -24,7 +24,9 @@ String username = (String) session.getAttribute("username");
 		    	<label class="ms-3 mt-3">Welcome <%= username %></label>
 		    </div>
 		</c:if>
-
+		
+		<jsp:include page="TopRatedMovies.jsp" />
+		
 		<form action="findmovies" method="get">
 			<h1 class="mb-4">Search movies</h1>
 			

@@ -474,7 +474,7 @@ public class MovieDao {
 		    String sql = "SELECT MovieId, Title, ReleaseDate, Rating, Duration, Summary, DirectorId, StudioId, Genre "
 		    		+ "FROM Movie "
 		    		+ "ORDER BY Rating DESC "
-		    		+ "LIMIT 10";
+		    		+ "LIMIT 5";
 
 		    try (Connection connection = connectionManager.getConnection();
 		         PreparedStatement selectStmt = connection.prepareStatement(sql)) {
