@@ -51,8 +51,10 @@ public class Login extends HttpServlet {
 
             // Redirect to appropriate page based on user's role
             if (role.equals("ADMIN")) {
+            	session.setAttribute("role", "ADMIN");
                 resp.sendRedirect("/Oovies/AdminProfile.jsp");
             } else {
+            	session.setAttribute("role", "USER");
                 resp.sendRedirect("/Oovies/UserProfile.jsp");
             }
         } else {
