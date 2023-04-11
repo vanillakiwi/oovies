@@ -1,8 +1,16 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+
 <%-- Retrieve the admin's username from the session --%>
 <%
 String username = (String) session.getAttribute("username");
 %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,24 +30,11 @@ String username = (String) session.getAttribute("username");
 	        </form>
         </div> 
 	    
-	    <%-- TODO --%>
-	    <h4 class="ms-3 mt-2">Follows</h4>    
-        <table class="table ms-3 me-3 mb-3">
-			<thead>
-				<tr>
-					<th scope="col">FollowId</th>
-					<th scope="col">Actor</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${follows}" var="follow" >
-					<tr>
-						<td><c:out value="${follow.getFollowId()}" /></td>
-						<td><a href="actor?id=${follow.getAcotr().getActorId()}"><c:out value="${follow.getAcotr().getActorId()}" /></a></td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+	    <!--    
+	    <form action="userprofile" method="post">
+	    <button type="submit" class="btn btn-outline-primary me-3 ms-3 mb-2">Profile</button>
+	    </form>
+	    -->  
 	     
 	    <h4 class="ms-3 mt-2">Loves</h4>    
         <table class="table ms-3 me-3 mb-3">
@@ -52,12 +47,15 @@ String username = (String) session.getAttribute("username");
 			<tbody>
 				<c:forEach items="${loves}" var="love" >
 					<tr>
+					
 						<td><c:out value="${love.getLoveId()}" /></td>
 						<td><a href="moviedetails?id=${love.getMovie().getMovieId()}"><c:out value="${love.getMovie().getMovieId()}" /></a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+	     
+	     
 	     
 	    <h4 class="ms-3 mt-2">Ratings</h4>    
         <table class="table ms-3 me-3 mb-3">
@@ -72,7 +70,7 @@ String username = (String) session.getAttribute("username");
 				<c:forEach items="${ratings}" var="rating" >
 					<tr>
 						<td><c:out value="${rating.getRatingId()}" /></td>
-						<td><c:out value="${rating.getScore}" /></td>
+						<td><c:out value="${rating.getScore()}" /></td>
 						<td><a href="moviedetails?id=${rating.getMovie().getMovieId()}"><c:out value="${rating.getMovie().getMovieId()}" /></a></td>
 					</tr>
 				</c:forEach>
@@ -100,5 +98,6 @@ String username = (String) session.getAttribute("username");
 				</c:forEach>
 			</tbody>
 		</table>
+
     </body>
 </html>
