@@ -55,7 +55,7 @@ public class Login extends HttpServlet {
                 resp.sendRedirect("/Oovies/AdminProfile.jsp");
             } else {
             	session.setAttribute("role", "USER");
-                resp.sendRedirect("/Oovies/UserProfile.jsp");
+                resp.sendRedirect("/Oovies/userprofile");
             }
         } else {
             // Set error message

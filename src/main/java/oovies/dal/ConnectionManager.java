@@ -12,7 +12,7 @@ import java.util.Properties;
 public class ConnectionManager {
 
 	private final String user = "root";
-	private final String password = "password";
+	private final String password = "rootpassword";
 	private final String hostName = "localhost";
 	private final int port= 3306;
 	private final String schema = "Oovies";
