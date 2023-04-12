@@ -41,10 +41,12 @@ public class FindMovies extends HttpServlet {
 
 	    int page = 1;
 	    int moviesPerPage = 20;
+	    int offset = (page - 1) * moviesPerPage;
 
 	    if (pageStr != null && !pageStr.isEmpty()) {
 	        page = Integer.parseInt(pageStr);
 	    }
+	    offset = (page - 1) * moviesPerPage;
 
 	    Movie.Genre genre = null;
 	    if (genreStr != null && !genreStr.isEmpty()) {
@@ -62,29 +64,19 @@ public class FindMovies extends HttpServlet {
 	    }
 
 	    try {
-	    	int totalMovies = movieDao.getMovieSizeByAdvancedSearch(title, genre, year, rating, moviesPerPage);
-	        int maxPage = (int) Math.ceil((double) totalMovies / moviesPerPage);
-	    	
-	        if (page < 1) {
-	            page = 1;
-	        } else if (page > maxPage) {
-	            page = maxPage;
-	        }
-
-	        int offset = moviesPerPage * (page - 1);
-
 	        movies = movieDao.getMovieByAdvancedSearch(title, genre, year, rating, offset, moviesPerPage);
+	        int totalMovies = movieDao.getMovieSizeByAdvancedSearch(title, genre, year, rating, moviesPerPage);
+	        int maxPage = (int) Math.ceil((double) totalMovies / moviesPerPage);
 	        messages.put("success", "Displaying results for Title: " + title + " Genre: " + genreStr + " Year: " + yearStr
 	                + " Rating: " + ratingStr);
-	        
 	        req.setAttribute("movies", movies);
 	        req.setAttribute("maxPage", maxPage);
-	        req.setAttribute("pageIndex", page);
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        throw new IOException(e);
 	    }
 
+	    req.setAttribute("pageIndex", page);
 	    req.getRequestDispatcher("/FindMovies.jsp").forward(req, resp);
 	}
 }
