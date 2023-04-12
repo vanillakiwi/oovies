@@ -98,7 +98,7 @@ String username = (String) session.getAttribute("username");
 		</table>
 		
 		<%--pagination --%>
-        <nav>
+		<%--<nav>
 		  <ul class="pagination justify-content-center">
 		    <li class="page-item ${maxPage == 1 ? 'disabled' : ''}">
 		      <span class="page-link">Page ${pageIndex} of ${maxPage}</span>
@@ -120,7 +120,68 @@ String username = (String) session.getAttribute("username");
 		      <a class="page-link" href="<c:url value='/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${pageIndex < maxPage ? pageIndex+1 : maxPage}'/>">Next</a>
 		    </li>
 		  </ul>
+		</nav> --%>
+		
+		<nav>
+		  <ul class="pagination justify-content-center">
+		    <li class="page-item ${maxPage == 1 ? 'disabled' : ''}">
+		      <span class="page-link">Page ${pageIndex} of ${maxPage}</span>
+		    </li>
+		    <li class="page-item ${pageIndex == 1 || maxPage == 1 ? 'disabled' : ''}">
+		      <a class="page-link" href="<c:url value='/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${pageIndex-1 > 0 ? pageIndex-1 : 1}'/>">Previous</a>
+		    </li>
+		    <c:choose>
+		      <c:when test="${maxPage < 10}">
+		        <c:set var="begin" value="1"/>
+		        <c:set var="end" value="${maxPage}"/>
+		      </c:when>
+		      <c:otherwise>
+		        <c:choose>
+		          <c:when test="${pageIndex <= 5}">
+		            <c:set var="begin" value="1"/>
+		            <c:set var="end" value="9"/>
+		          </c:when>
+		          <c:when test="${pageIndex >= maxPage - 4}">
+		            <c:set var="begin" value="${maxPage - 8}"/>
+		            <c:set var="end" value="${maxPage}"/>
+		          </c:when>
+		          <c:otherwise>
+		            <c:set var="begin" value="${pageIndex - 4}"/>
+		            <c:set var="end" value="${pageIndex + 4}"/>
+		          </c:otherwise>
+		        </c:choose>
+		      </c:otherwise>
+		    </c:choose>
+		    <c:forEach begin="${begin}" end="${end}" varStatus="loop">
+		      <li class="page-item ${loop.index == pageIndex ? 'active' : ''}">
+		        <a class="page-link" href="<c:url value='/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${loop.index}'/>">${loop.index}</a>
+		      </li>
+		    </c:forEach>
+		    <li class="page-item ${pageIndex == maxPage || maxPage == 1 ? 'disabled' : ''}">
+		      <a class="page-link" href="<c:url value='/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${pageIndex < maxPage ? pageIndex+1 : maxPage}'/>">Next</a>
+		    </li>
+		  </ul>
 		</nav>
+		
+		
+		<%--<nav>
+            <ul class="pagination justify-content-center">
+                <li ><a class="page-link" href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${pageIndex-1>0?pageIndex-1:1}"/>">Previous</a></li>
+                
+ 
+                <c:forEach begin="1" end="${maxPage<10?maxPage-1:9}" varStatus="loop">
+                    <c:set var="active" value="${loop.index==pageIndex?'active':''}"/>
+                    <li class="page-item" class="${active}"><a class="page-link"
+                            href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${loop.index}"/>">${loop.index}</a>
+                    </li>
+                </c:forEach>
+                <li class="page-item" class="${active}" ><a class="page-link"
+                            href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${maxPage}"/>">${maxPage}</a>
+                  </li>
+                
+                <li><a class="page-link" href="<c:url value="/findmovies?title=${title}&genre=${genre}&year=${year}&rating=${rating}&pageIndex=${pageIndex<maxPage?pageIndex+1:maxPage}"/>">Next</a></li>
+            </ul>
+        </nav>--%>
 
 	</div>
 </body>
