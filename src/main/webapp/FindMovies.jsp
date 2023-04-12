@@ -24,7 +24,6 @@ String username = (String) session.getAttribute("username");
 		    	<label class="ms-3 mt-3">Welcome <%= username %></label>
 		    </div>
 		</c:if>
-
 		<form action="findmovies" method="get">
 			<h1 class="mb-4">Search movies</h1>
 			
@@ -96,7 +95,7 @@ String username = (String) session.getAttribute("username");
 		</table>
 		
 		<%--pagination --%>
-        <nav>
+		<nav>
 		  <ul class="pagination justify-content-center">
 		    <li class="page-item ${maxPage == 1 ? 'disabled' : ''}">
 		      <span class="page-link">Page ${pageIndex} of ${maxPage}</span>
@@ -119,7 +118,6 @@ String username = (String) session.getAttribute("username");
 		    </li>
 		  </ul>
 		</nav>
-
 	</div>
 </body>
 </html>
