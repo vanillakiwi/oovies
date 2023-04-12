@@ -14,7 +14,7 @@
 			    	<a class="nav-link" href="FindMovies.jsp">Home</a>
 			  	</li>
 		        <li class="nav-item">
-				    <a class="nav-link" href="<c:if test='${sessionScope.loggedIn == true and sessionScope.role == "USER"}'>UserProfile.jsp</c:if>
+				    <a class="nav-link" href="<c:if test='${sessionScope.loggedIn == true and sessionScope.role == "USER"}'>/Oovies/userprofile</c:if>
 										      <c:if test='${sessionScope.loggedIn == true and sessionScope.role == "ADMIN"}'>AdminProfile.jsp</c:if>
 										      <c:if test='${sessionScope.loggedIn != true}'>Login.jsp</c:if>">
 					    Profile
