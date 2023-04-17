@@ -394,44 +394,50 @@ public class MovieDao {
 		/**
 		 * Advance search to get movies' list base on given filter: title, genre, year and rating
 		 */
-		public List<Movie> getMovieByAdvancedSearch(String title, Movie.Genre genre, int year, double rating) throws SQLException {
+		public List<Movie> getMovieByAdvancedSearch(String title, Movie.Genre genre, int year, double rating, int offset, int limit) throws SQLException {
 		    List<Movie> movies = new ArrayList<>();
 
 		    StringBuilder sb = new StringBuilder();
-	        sb.append("SELECT MovieId,Title,ReleaseDate,Rating,Duration,Summary,DirectorId,StudioId,Genre "
-	        		  + "FROM Movie WHERE 1=1");
-	        if (title != null && !title.isEmpty()) {
-	            sb.append(" AND Title LIKE ?");
-	        }
-	        if (genre != null) {
-	            sb.append(" AND Genre = ?");
-	        }
-	        if (year > 1923) {
-	            sb.append(" AND YEAR(ReleaseDate) = ?");
-	        }
-	        if (rating > 0.0) {
-	        	sb.append(" AND Rating BETWEEN ? AND ?");
-	        }
-	        
+		    sb.append("SELECT MovieId,Title,ReleaseDate,Rating,Duration,Summary,DirectorId,StudioId,Genre "
+		            + "FROM Movie WHERE 1=1");
+
+		    List<Object> params = new ArrayList<>();
+
+		    if (title != null && !title.isEmpty()) {
+		        sb.append(" AND Title LIKE ?");
+		        params.add("%" + title + "%");
+		    }
+		    if (genre != null) {
+		        sb.append(" AND Genre = ?");
+		        params.add(genre.toString());
+		    }
+		    if (year > 1923) {
+		        sb.append(" AND YEAR(ReleaseDate) = ?");
+		        params.add(year);
+		    }
+		    if (rating > 0.0) {
+		        sb.append(" AND Rating BETWEEN ? AND ?");
+		        params.add(rating);
+		        params.add(rating + 0.9);
+		    }
+
+		    // add pagination parameters
+		    if (offset < 0) {
+		        offset = 0;
+		    }
+		    sb.append(" LIMIT ? OFFSET ?");
+		    params.add(limit);
+		    params.add(offset);
+
 		    try (Connection connection = connectionManager.getConnection();
 		         PreparedStatement selectStmt = connection.prepareStatement(sb.toString())) {
 
-		    	// Set the parameters for the query
+		        // Set the parameters for the query
 		        int paramIndex = 1;
-		        if (title != null && !title.isEmpty()) {
-		        	selectStmt.setString(paramIndex++, "%" + title + "%");
+		        for (Object param : params) {
+		            selectStmt.setObject(paramIndex++, param);
 		        }
-		        if (genre != null) {
-		        	selectStmt.setString(paramIndex++, genre.toString());
-		        }
-		        if (year > 1923) {
-		        	selectStmt.setInt(paramIndex++, year);
-		        }
-		        if (rating > 0.0) {
-		        	selectStmt.setDouble(paramIndex++, rating);
-		        	selectStmt.setDouble(paramIndex++, rating + 0.9);
-		        }
-		        
+
 		        try (ResultSet results = selectStmt.executeQuery()) {
 		            DirectorDao directorDao = DirectorDao.getInstance();
 		            StudioDao studioDao = StudioDao.getInstance();
@@ -449,7 +455,7 @@ public class MovieDao {
 		                Director director = directorDao.getDirectorByDirectorId(directorId);
 		                Studio studio = studioDao.getStudioById(studioId);
 		                Movie.Genre resultGenre = Movie.Genre.valueOf(results.getString("Genre"));
-		                
+
 		                Movie movie = new Movie(resultMovieId, resultTitle, releaseDate, resultRating, duration, summary,
 		                        director, studio, resultGenre);
 
@@ -462,4 +468,55 @@ public class MovieDao {
 		    }
 		    return movies;
 		}
+
+		
+		/**
+		 * Advance search to get movies' count base on given filter: title, genre, year and rating
+		 */
+		public int getMovieCountByAdvancedSearch(String title, Movie.Genre genre, int year, double rating) throws SQLException {
+		    int count = 0;
+		    StringBuilder sb = new StringBuilder();
+		    sb.append("SELECT COUNT(*) as count FROM Movie WHERE 1=1");
+		    if (title != null && !title.isEmpty()) {
+		        sb.append(" AND Title LIKE ?");
+		    }
+		    if (genre != null) {
+		        sb.append(" AND Genre = ?");
+		    }
+		    if (year > 1923) {
+		        sb.append(" AND YEAR(ReleaseDate) = ?");
+		    }
+		    if (rating > 0.0) {
+		        sb.append(" AND Rating BETWEEN ? AND ?");
+		    }
+
+		    try (Connection connection = connectionManager.getConnection();
+		         PreparedStatement selectStmt = connection.prepareStatement(sb.toString())) {
+		        int paramIndex = 1;
+		        if (title != null && !title.isEmpty()) {
+		            selectStmt.setString(paramIndex++, "%" + title + "%");
+		        }
+		        if (genre != null) {
+		            selectStmt.setString(paramIndex++, genre.toString());
+		        }
+		        if (year > 1923) {
+		            selectStmt.setInt(paramIndex++, year);
+		        }
+		        if (rating > 0.0) {
+		            selectStmt.setDouble(paramIndex++, rating);
+		            selectStmt.setDouble(paramIndex++, rating + 0.9);
+		        }
+
+		        try (ResultSet results = selectStmt.executeQuery()) {
+		            if (results.next()) {
+		                count = results.getInt("count");
+		            }
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        throw e;
+		    }
+		    return count;
+		}
+		
 }

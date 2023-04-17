@@ -5,7 +5,6 @@ import oovies.model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +18,7 @@ import javax.servlet.annotation.*;
 @WebServlet("/findmovies")
 public class FindMovies extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
 	private MovieDao movieDao;
 
 	@Override
@@ -28,81 +28,60 @@ public class FindMovies extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Map<String, String> messages = new HashMap<String, String>();
-		req.setAttribute("messages", messages);
+	    Map<String, String> messages = new HashMap<String, String>();
+	    req.setAttribute("messages", messages);
 
-		List<Movie> movies = new ArrayList<Movie>();
+	    List<Movie> movies = new ArrayList<Movie>();
 
-		String title = req.getParameter("title");
-		String genreStr = req.getParameter("genre");
-		String yearStr = req.getParameter("year");
-		String ratingStr = req.getParameter("rating");
+	    String title = req.getParameter("title");
+	    String genreStr = req.getParameter("genre");
+	    String yearStr = req.getParameter("year");
+	    String ratingStr = req.getParameter("rating");
+	    String pageStr = req.getParameter("pageIndex");
 
-		Movie.Genre genre = null;
-		if (genreStr != null && !genreStr.isEmpty()) {
-			genre = Movie.Genre.valueOf(genreStr);
-		}
+	    int page = 1;
+	    int moviesPerPage = 20;
 
-		int year = 0;
-		if (yearStr != null && !yearStr.isEmpty()) {
-			year = Integer.parseInt(yearStr);
-		}
+	    if (pageStr != null && !pageStr.isEmpty()) {
+	        page = Integer.parseInt(pageStr);
+	    }
 
-		double rating = 0.0;
-		if (ratingStr != null && !ratingStr.isEmpty()) {
-			rating = Double.parseDouble(ratingStr);
-		}
+	    int offset = (page - 1) * moviesPerPage;
 
-		try {
-			movies = movieDao.getMovieByAdvancedSearch(title, genre, year, rating);
-			messages.put("success", "Displaying results for: " + title);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new IOException(e);
-		}
-		
-		req.setAttribute("movies", movies);
-		req.getRequestDispatcher("/FindMovies.jsp").forward(req, resp);
+	    Movie.Genre genre = null;
+	    if (genreStr != null && !genreStr.isEmpty()) {
+	        genre = Movie.Genre.valueOf(genreStr);
+	    }
+
+	    int year = 0;
+	    if (yearStr != null && !yearStr.isEmpty()) {
+	        year = Integer.parseInt(yearStr);
+	    }
+
+	    double rating = 0.0;
+	    if (ratingStr != null && !ratingStr.isEmpty()) {
+	        rating = Double.parseDouble(ratingStr);
+	    }
+
+	    try {
+	        // Get the list of movies and the total count
+	        List<Movie> movieList = movieDao.getMovieByAdvancedSearch(title, genre, year, rating, offset, moviesPerPage);
+	        int totalCount = movieDao.getMovieCountByAdvancedSearch(title, genre, year, rating);
+
+	        // Calculate the max page based on the total count
+	        int maxPage = (int) Math.ceil((double) totalCount / moviesPerPage);
+
+	        messages.put("success", "Displaying results for Title: " + title + " Genre: " + genreStr + " Year: " + yearStr
+	                + " Rating: " + ratingStr);
+	        req.setAttribute("movies", movieList);
+	        req.setAttribute("maxPage", maxPage);
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new IOException(e);
+	    }
+
+	    req.setAttribute("pageIndex", page);
+	    req.getRequestDispatcher("/FindMovies.jsp").forward(req, resp);
 	}
 
-	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// Map for storing messages.
-		Map<String, String> messages = new HashMap<String, String>();
-		req.setAttribute("messages", messages);
-
-		List<Movie> movies = new ArrayList<Movie>();
-
-		String title = req.getParameter("title");
-		String genreStr = req.getParameter("genre");
-		String yearStr = req.getParameter("year");
-		String ratingStr = req.getParameter("rating");
-
-		Movie.Genre genre = null;
-		if (genreStr != null && !genreStr.isEmpty()) {
-			genre = Movie.Genre.valueOf(genreStr);
-		}
-
-		int year = 0;
-		if (yearStr != null && !yearStr.isEmpty()) {
-			year = Integer.parseInt(yearStr);
-		}
-
-		double rating = 0.0;
-		if (ratingStr != null && !ratingStr.isEmpty()) {
-			rating = Double.parseDouble(ratingStr);
-		}
-
-		try {
-			movies = movieDao.getMovieByAdvancedSearch(title, genre, year, rating);
-			messages.put("success", "Displaying results for Title: " + title + " Genre: " + genre + " Year: " + year
-					+ " Rating: " + rating);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new IOException(e);
-		}
-
-		req.setAttribute("movies", movies);
-		req.getRequestDispatcher("/FindMovies.jsp").forward(req, resp);
-	}
 }

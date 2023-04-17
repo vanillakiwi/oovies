@@ -31,8 +31,8 @@ public class Person{
         this.password = password;
         this.email = email;
         this.role = role;
-    }
-    
+    }   
+
     public Person(String userName) {
     	this.userName = userName;
     }

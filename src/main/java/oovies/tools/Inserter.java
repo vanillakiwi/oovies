@@ -61,6 +61,74 @@ public class Inserter {
 				studios.get(1), Movie.Genre.DRAMA));
 		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
 				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		
+		//Testing pagination
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
+		movies.add(new Movie("Mulan", date, 4.0, 300,
+				"Mulan is a 2020 American fantasy action drama film produced by Walt Disney Pictures", directors.get(0),
+				studios.get(0), Movie.Genre.ACTION));
+		movies.add(new Movie("Call me by your name", date, 5.0, 300,
+				"romance blossoms between a seventeen-year-old student and the older man", directors.get(1),
+				studios.get(1), Movie.Genre.DRAMA));
+		movies.add(new Movie("Die hard", date, 1.0, 132, "a 1988 American action film directed by John McTiernan",
+				directors.get(2), studios.get(1), Movie.Genre.ACTION));
 
 		casts.add(new Casts(movies.get(0), actors.get(0)));
 		casts.add(new Casts(movies.get(1), actors.get(0)));
@@ -189,6 +257,12 @@ public class Inserter {
 			System.out.format("Reading actor by actorName %s: id:%d name:%s gender:%s \n", actorName,
 					other.getActorId(), other.getName(), other.getGender().name());
 		}
+		
+		// Get actors' list by given movieId
+		for (Actor other : actorDao.getActorsByMovieId(movies.get(0).getMovieId())) {
+			System.out.format("Reading actor by movieId %s: id:%d name:%s gender:%s \n", movies.get(0).getMovieId(),
+					other.getActorId(), other.getName(), other.getGender().name());
+		}
 
 		
 		/**
@@ -250,7 +324,7 @@ public class Inserter {
 		Movie.Genre genre = null;
 		int year = 0;
 		double rating4 = 4.0;
-		for (Movie other : movieDao.getMovieByAdvancedSearch(title, genre, year, rating4)) {
+		for (Movie other : movieDao.getMovieByAdvancedSearch(title, genre, year, rating4, 1, 20)) {
 			System.out.format(
 				"Displaying results for Title: %s Genre: %s Year: %d Rating: %f\n"
 				+ "movieId:%d title:%s releaseDate:%s rating:%f durating:%d summary:%s directorId:%d studioId:%d genre:%s \n",
@@ -441,6 +515,8 @@ public class Inserter {
 		System.out.format("After update movie summary, summary:%s\n", movie.getSummary());
 	}
 
+	
+
 	/*
 	 * public static void deleteAll() throws SQLException {
 	 * System.out.println("Deleting all users ..."); for (Person person : persons) {
@@ -473,4 +549,5 @@ public class Inserter {
 	 * System.out.println("Deleting all ratings ..."); for (Rating rating: ratings)
 	 * { ratingDao.delete(rating); } }
 	 */
+
 }
